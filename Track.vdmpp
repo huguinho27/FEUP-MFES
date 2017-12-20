@@ -1,0 +1,19 @@
+class Track
+
+types
+	public TrackLocation = seq1 of char;
+	public TrackDistance = real; 
+
+instance variables
+	public location: TrackLocation;
+	public distance: TrackDistance;
+	
+operations
+	public Track: () ==> Track
+	Track(loc, dist) == (
+		location := loc;
+		distance := dist;
+		return self
+	);
+	
+end Track
