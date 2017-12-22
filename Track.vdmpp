@@ -9,11 +9,5 @@ instance variables
 	public distance: TrackDistance;
 	
 operations
-	public Track: () ==> Track
-	Track(loc, dist) == (
-		location := loc;
-		distance := dist;
-		return self
-	);
-	
+
 end Track

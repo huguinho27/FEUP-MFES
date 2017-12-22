@@ -1,54 +1,26 @@
 class Rally
+
+instance variables
+	public competitions: set of Competition;
+	
+operations
+	public Rally: () ==> Rally
+	Rally() == (competitions := {}; return self)
+	post competitions = {};
+
 end Rally
 
 
-class Day is subclass of Rally
+
+
+
+
+
+
+class Competition
 
 instance variables
-private sections : seq of Section := [];
-private winner : Participant; -- winner of different groupings?!
-private sponsor : Sponsor; -- more than one?
-private participants : seq of Participants := [];
+	public name: seq of char;
+	
+end Competition
 
-end Day
-
-
-class Section is subclass of Day
-
-instance variables
-private sector : seq of Sector := [];
-private locality : seq of char := [];
-private special : bool := false;
-private passageControl : bool;
-private grouping : char;
-private service : bool;
-private refuel : bool;
-private holding : real;
--- TIME TRIAL - WHAT IS THIS?!?!
-
-end Section
-
-
-class Participant is subclass of Rally
-
-instance variables
-private name : seq of char := [];
-
-
-end Participant
-
-class Sponsor is subclass of Rally
-
-instance variables
-private name : seq of char := [];
-
-end Sponsor
-
-class Sector is subclass of Section
-
-instance variables
-private averageSpeed : real;
-private time : real;
-private distance : real;
-
-end Sector
