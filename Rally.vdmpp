@@ -1,12 +1,63 @@
+class Utils
+
+types 
+	public String = seq of char;
+	
+operations
+
+	public static checkIfExists: String * seq of Competition ==> bool
+	checkIfExists(name, sequence) == 
+	(
+		for competition in sequence do
+		(
+			if equalString(name, competition.getName())
+			then return true;
+		);
+		
+		return false;
+	);
+	
+	public static equalString: String * String ==> bool
+	equalString(name, compName) == 
+	(
+		if len name <> len compName then return false;
+		
+		for i = 0 to len name - 1 by 1 do
+		(
+			if name(i) <> compName(i) then return false;
+		); 
+		return true
+	);
+	
+
+end Utils
+
+
+
+
+
+
 class Rally
 
+types 
+	public String = seq of char;
+	public CompetitionList = seq of Competition;
+
 instance variables
-	public competitions: set of Competition;
+	public competitions: CompetitionList;
 	
 operations
 	public Rally: () ==> Rally
-	Rally() == (competitions := {}; return self)
-	post competitions = {};
+	Rally() == (competitions := []; return self)
+	post competitions = [];
+	
+	public addCompetition: String ==> CompetitionList
+	addCompetition(newCompName) == (
+		competitions := competitions ^ [new Competition(newCompName)];
+		return competitions)
+	post competitions = competitions;
+
+
 
 end Rally
 
@@ -14,13 +65,24 @@ end Rally
 
 
 
-
-
-
 class Competition
 
+types
+	public String = seq of char;
+
 instance variables
-	public name: seq of char;
+	public name: String;
 	
+operations
+	public Competition: String ==> Competition
+	Competition(compName) == (
+		name := compName;
+		return self
+	)
+	post name = compName;
+	
+	public getName: () ==> String 
+	getName() == return name;
+
 end Competition
 
