@@ -1,0 +1,75 @@
+/**
+ * Result class, only representative.
+ */ 
+class Result
+
+end Result
+
+
+/**
+ * Result Points class, to represnt points as an integer.
+ */
+class ResultPoints is subclass of Result
+
+instance variables
+	public currPoints: nat;
+	
+operations
+
+	/**
+	 * ResultPoints constructor, receives points and sets the currPoints, returns self.
+	 */	
+	public ResultPoints: nat ==> ResultPoints
+	ResultPoints(points) == (currPoints := points; return self);
+	
+	/**
+	 * getPoints function, returns the current points.
+	 */		
+	public getPoints: () ==> nat
+	getPoints() == return currPoints;
+
+	/**
+	 * addPoints funtion, adds more Points to the current Points, returns self.
+	 */	
+	public addPoints: nat ==> ResultPoints
+	addPoints(morePoints) == (currPoints := currPoints + morePoints; return self);
+
+	/**
+	 * editPoints function, edits the currentPoints, return self.
+	 */	
+	public editPoints: nat ==> ResultPoints
+	editPoints(newPoints) == (currPoints := newPoints; return self);
+
+end ResultPoints
+
+
+
+/**
+ * Resut Time class, to represent times.
+ */	
+class ResultTime is subclass of Result
+
+instance variables
+	public currTime: real;
+	
+operations
+
+	/**
+	 * ResultTime constructor, receives time and sets the currTime, returns self.
+	 */	
+	public ResultTime: real ==> ResultTime
+	ResultTime(time) == (currTime := time; return self);
+	
+	/**
+	 * getTime, returns the currTime.
+	 */		
+	public getTime: () ==> real
+	getTime() == return currTime;
+	
+	/**
+	 * editTime function, receives new time and updates the currTime, returns self.
+	 */	
+	public editTime: nat ==> ResultTime
+	editTime(newTime) == (currTime := newTime; return self);
+
+end ResultTime

@@ -1,30 +1,80 @@
+/**
+ * Rally Class, Application Scope
+ */
+
 class Rally
 
 types 
 	public String = seq of char;
-	public CompetitionList = set of Competition;
+	public CompetitionSet = set of Competition;
 
 
 instance variables
-	public competitions: CompetitionList;
+	public competitions: CompetitionSet;
 	
 	
 operations
+	/**
+	 * Rally constructor, creates empty set of Competitions and returns self.
+	 */
 	public Rally: () ==> Rally
 	Rally() == (competitions := {}; return self)
 	post competitions = {};
 	
-	public addCompetition: String ==> CompetitionList
-	addCompetition(newCompName) == 
+	/**
+	 * Rally addCompetition, creates new Competion with a name (identifier) and a season
+	 * adds the Competition to the set of Competitions and returns that set.
+	 */
+	public addCompetition: String * nat ==> CompetitionSet
+	addCompetition(newCompName, newCompSeason) == 
 	(
 		if Utils`checkIfExists(newCompName, competitions) = false
 		then 
 		(
-			competitions := competitions union {new Competition(newCompName)};
+			competitions := competitions union {new Competition(newCompName, newCompSeason)};
 		);
 		return competitions
 	)
 	post competitions = competitions;
+	
+	/**
+	 * Rally edit Competition, searchs for the competition name (identifier) and edits the 
+	 * season to the new value. Returns the set of Competitions
+	 */	
+	public editCompetition: String * nat ==> CompetitionSet
+	editCompetition(compName, newCompSeason) == 
+	(
+	
+		for all competition in set competitions do
+		(
+			if Utils`equalString(competition.getName(), compName) 
+			then 
+			(
+				competition.editSeason(newCompSeason);
+				return competitions
+			)
+		);
+		return competitions;
+	);
+	
+	/**
+	 * Rally delete Competition, searchs for the competition name (identifier) and deletes the 
+	 * competition from the set. Returns the set of Competitions
+	 */	
+	public deleteCompetition: String ==> CompetitionSet
+	deleteCompetition(compName) ==
+	(
+		for all competition in set competitions do
+		(
+			if Utils`equalString(competition.getName(), compName) 
+			then 
+			(
+				competitions := competitions \ {competition};
+				return competitions
+			)
+		);
+		return competitions;
+	)
 
 end Rally
 

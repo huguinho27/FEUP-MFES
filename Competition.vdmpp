@@ -2,21 +2,32 @@ class Competition
 
 types
 	public String = seq of char;
+	public RaceSet = set of Race;
 
 instance variables
 	public name: String;
+	public season: nat;
+	public races: RaceSet;
 	
 operations
-	public Competition: String ==> Competition
-	Competition(compName) == 
+	public Competition: String * nat ==> Competition
+	Competition(compName, compSeason) == 
 	(
 		name := compName;
+		season := compSeason;
+		races := {};
 		return self
 	)
 	post name = compName;
 	
 	public getName: () ==> String 
 	getName() == return name;
+	
+	public getSeason: () ==> nat
+	getSeason() == return season;
+	
+	public editSeason: nat ==> ()
+	editSeason(newSeason) == season := newSeason; 
 
 end Competition
 
