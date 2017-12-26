@@ -15,9 +15,15 @@ operations
 	post competitions = [];
 	
 	public addCompetition: String ==> CompetitionList
-	addCompetition(newCompName) == (
-		competitions := competitions ^ [new Competition(newCompName)];
-		return competitions)
+	addCompetition(newCompName) == 
+	(
+		if Utils`checkIfExists(newCompName, competitions) = false
+		then 
+		(
+			competitions := competitions ^ [new Competition(newCompName)];
+		);
+		return competitions
+	)
 	post competitions = competitions;
 
 end Rally
