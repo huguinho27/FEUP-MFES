@@ -1,0 +1,39 @@
+class Utils
+
+types 
+	public String = seq of char;
+	
+operations
+
+	public static checkIfExists: String * seq of Competition ==> bool
+	checkIfExists(name, sequence) == 
+	(
+		for competition in sequence do
+		(
+			if equalString(name, competition.getName())
+			then return true;
+		);
+		
+		return false;
+	);
+	
+	public static equalString: String * String ==> bool
+	equalString(name, compName) == 
+	(
+		if len name <> len compName then return false;
+		
+		for i = 1 to len name by 1 do
+		(
+			if name(i) <> compName(i) then return false;
+		); 
+		return true
+	);
+	
+
+end Utils
+
+
+
+
+
+
