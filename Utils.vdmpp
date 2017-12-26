@@ -5,10 +5,10 @@ types
 	
 operations
 
-	public static checkIfExists: String * seq of Competition ==> bool
+	public static checkIfExists: String * set of Competition ==> bool
 	checkIfExists(name, sequence) == 
 	(
-		for competition in sequence do
+		for all competition in set sequence do
 		(
 			if equalString(name, competition.getName())
 			then return true;

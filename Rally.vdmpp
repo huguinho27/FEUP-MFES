@@ -2,7 +2,7 @@ class Rally
 
 types 
 	public String = seq of char;
-	public CompetitionList = seq of Competition;
+	public CompetitionList = set of Competition;
 
 
 instance variables
@@ -11,8 +11,8 @@ instance variables
 	
 operations
 	public Rally: () ==> Rally
-	Rally() == (competitions := []; return self)
-	post competitions = [];
+	Rally() == (competitions := {}; return self)
+	post competitions = {};
 	
 	public addCompetition: String ==> CompetitionList
 	addCompetition(newCompName) == 
@@ -20,7 +20,7 @@ operations
 		if Utils`checkIfExists(newCompName, competitions) = false
 		then 
 		(
-			competitions := competitions ^ [new Competition(newCompName)];
+			competitions := competitions union {new Competition(newCompName)};
 		);
 		return competitions
 	)
