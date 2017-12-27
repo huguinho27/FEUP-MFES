@@ -5,8 +5,8 @@ types
 	
 operations
 
-	public static checkIfExists: String * set of Competition ==> bool
-	checkIfExists(name, sequence) == 
+	public static checkIfExistsCompetition: String * set of Competition ==> bool
+	checkIfExistsCompetition(name, sequence) == 
 	(
 		for all competition in set sequence do
 		(
@@ -14,6 +14,17 @@ operations
 			then return true;
 		);
 		
+		return false;
+	);
+	
+	public static checkIfExistsTrack: String * set of Track ==> bool
+	checkIfExistsTrack(name, sequence) ==
+	(
+		for all track in set sequence do
+		(
+			if equalString(name, track.getName())
+			then return true;
+		);
 		return false;
 	);
 	

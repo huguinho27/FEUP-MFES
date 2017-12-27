@@ -7,20 +7,24 @@ class Rally
 types 
 	public String = seq of char;
 	public CompetitionSet = set of Competition;
+	public TrackSet = set of Track;
 
 
 instance variables
-	public competitions: CompetitionSet;
+	private competitions: CompetitionSet;
+	private tracks: TrackSet;
 	
 	
 operations
 	/**
-	 * Rally constructor, creates empty set of Competitions and returns self.
+	 * Rally constructor, creates empty set of Competitions and tracks. returns self.
 	 */
 	public Rally: () ==> Rally
-	Rally() == (competitions := {}; return self)
-	post competitions = {};
+	Rally() == (competitions := {}; tracks := {}; return self);
 	
+	/**
+	 * COMPETITION SCOPE
+	 */
 	/**
 	 * Rally addCompetition, creates new Competion with a name (identifier) and a season
 	 * adds the Competition to the set of Competitions and returns that set.
@@ -28,7 +32,7 @@ operations
 	public addCompetition: String * nat ==> CompetitionSet
 	addCompetition(newCompName, newCompSeason) == 
 	(
-		if Utils`checkIfExists(newCompName, competitions) = false
+		if Utils`checkIfExistsCompetition(newCompName, competitions) = false
 		then 
 		(
 			competitions := competitions union {new Competition(newCompName, newCompSeason)};
@@ -59,7 +63,7 @@ operations
 	
 	/**
 	 * Rally delete Competition, searchs for the competition name (identifier) and deletes the 
-	 * competition from the set. Returns the set of Competitions
+	 * competition from the set. Returns the set of Competitions.
 	 */	
 	public deleteCompetition: String ==> CompetitionSet
 	deleteCompetition(compName) ==
@@ -74,7 +78,38 @@ operations
 			)
 		);
 		return competitions;
-	)
+	);
+	
+	/**
+	 * getCompetitions, returns the competition set.
+	 */
+	 public getCompetitions: () ==> CompetitionSet
+	 getCompetitions() == return competitions;
+	 
+	/**
+	 * TRACK SCOPE
+	 */
+	 
+	 /**
+		* addTrack, creates a new track with name, location and distance, adds to tracks
+		* returns the set of tracks.
+		*/
+	 public addTrack: String * String * real ==> TrackSet
+	 addTrack(name, location, distance) == 
+	 (
+			if Utils`checkIfExistsTrack(name, tracks) = false
+			then 
+			(
+				tracks := tracks union {new Track(name, location, distance)};
+			);
+			return tracks
+		);		
+		
+	 /**
+		* getTracks, returns the track set.
+		*/
+	 public getTracks: () ==> TrackSet
+	 getTracks() == return tracks;
 
 end Rally
 

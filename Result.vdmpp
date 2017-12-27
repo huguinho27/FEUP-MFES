@@ -12,7 +12,7 @@ end Result
 class ResultPoints is subclass of Result
 
 instance variables
-	public currPoints: nat;
+	private currPoints: nat;
 	
 operations
 
@@ -50,7 +50,7 @@ end ResultPoints
 class ResultTime is subclass of Result
 
 instance variables
-	public currTime: real;
+	private currTime: real;
 	
 operations
 

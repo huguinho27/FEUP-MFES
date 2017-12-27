@@ -1,13 +1,46 @@
+/**
+ *	Track Class
+ */
 class Track
 
 types
-	public TrackLocation = seq1 of char;
-	public TrackDistance = real; 
+	public String = seq of char;
 
 instance variables
-	public location: TrackLocation;
-	public distance: TrackDistance;
+	private trackName: String;
+	private trackLocation: String;
+	private trackDistance: real;
 	
 operations
+
+	/**
+	 * Track constructor, set name, location and distance. Return self.
+	 */	
+	public Track: String * String * real ==> Track
+	Track(name, location, distance) == 
+	(
+		trackName := name;
+		trackLocation := location;
+		trackDistance := distance;	
+		return self
+	);
+
+	/**
+	 *	getName, returns name.
+	 */
+	 public getName: () ==> String
+	 getName() == return trackName;
+	 
+	/**
+	 *	getLocation, returns location.
+	 */
+	 public getLocation: () ==> String
+	 getLocation() == return trackLocation;
+	 
+	/**
+	 *	getDistance, returns distance.
+	 */
+	 public getDistance: () ==> real
+	 getDistance() == return trackDistance;
 
 end Track

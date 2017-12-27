@@ -5,9 +5,9 @@ types
 	public RaceSet = set of Race;
 
 instance variables
-	public name: String;
-	public season: nat;
-	public races: RaceSet;
+	private name: String;
+	private season: nat;
+	private races: RaceSet;
 	
 operations
 	public Competition: String * nat ==> Competition
