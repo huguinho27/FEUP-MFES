@@ -1,0 +1,29 @@
+class Sponsor
+
+types
+	public String = seq of char;
+
+instance variables
+	public name: String;
+	public description: String;
+	
+operations
+
+	public Sponsor: String * String ==> Sponsor
+	Sponsor(sponsorName, sponsorDescription) == 
+	(
+		name := sponsorName; 
+		description := sponsorDescription;
+		return self
+	);
+	
+	public getName: () ==> String
+	getName() == return name;
+	
+	public getDescription: () ==> String
+	getDescription() == return description;
+	
+	public editDescription: String ==> ()
+	editDescription(newDescription) == description := newDescription;
+
+end Sponsor

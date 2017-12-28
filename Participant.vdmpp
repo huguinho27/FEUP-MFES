@@ -1,3 +1,33 @@
 class Participant
 
+types
+	public String = seq of char;
+
+instance variables
+	public pilot: Pilot;
+	public team: Team;
+	public vehicle: Vehicle;
+	
+operations
+	public Participant: Pilot * Team * Vehicle ==> Participant
+	Participant(pPilot, pTeam, pVehicle) == 
+	(
+		pilot := pPilot;
+		team := pTeam;
+		vehicle := pVehicle;
+		return self;
+	);
+	
+	public getName: () ==> String
+	getName() == return pilot.getName();
+	
+	public getPilot: () ==> Pilot
+	getPilot() == return pilot;
+	
+	public getTeam: () ==> Team
+	getTeam() == return team;
+	
+	public getVehicle: () ==> Vehicle
+	getVehicle() == return vehicle;
+	
 end Participant

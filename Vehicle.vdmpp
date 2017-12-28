@@ -1,0 +1,35 @@
+class Vehicle
+
+types
+	public String = seq of char;
+
+instance variables
+	public name: String;
+	public brand: String;
+	public model: String;
+	public plate:  String;
+	
+operations
+	public Vehicle: String * String * String * String ==> Vehicle
+	Vehicle(vehicleName, vehicleBrand, vehicleModel, vehiclePlate) == 
+	(
+		name := vehicleName;
+		brand := vehicleBrand;
+		model := vehicleModel;
+		plate := vehiclePlate;
+		return self;
+	);
+	
+	public getName: () ==> String 
+	getName() == return name;
+	
+	public getBrand: () ==> String 
+	getBrand() == return brand;
+	
+	public getModel: () ==> String 
+	getModel() == return model;
+	
+	public getPlate: () ==> String 
+	getPlate() == return plate;
+	
+end Vehicle

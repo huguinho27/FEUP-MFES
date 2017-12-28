@@ -1,0 +1,56 @@
+class Team
+
+types
+	public String = seq of char;
+	public PilotSet = set of Pilot;
+	public SponsorSet = set of Sponsor;
+	public VehicleSet = set of Vehicle;
+
+instance variables
+	private name: String;
+	private pilotSet: PilotSet;
+	private sponsorSet: SponsorSet;
+	private vehicleSet: VehicleSet;
+	
+operations
+	public Team: String ==> Team
+	Team(tName) == 
+	(
+		name := tName;
+		pilotSet := {};
+		sponsorSet := {};
+		vehicleSet := {};
+		return self;
+	);
+	
+	public getName: () ==> String
+	getName() == return name;
+	
+	public getPilotSet: () ==> PilotSet
+	getPilotSet() == return pilotSet;
+	
+	public getSponsorSet: () ==> SponsorSet
+	getSponsorSet() == return sponsorSet;
+	
+	public getVehicleSet: () ==> VehicleSet
+	getVehicleSet() == return vehicleSet;
+	
+	public addPilot: Pilot ==> ()
+	addPilot(newPilot) == pilotSet := pilotSet union {newPilot};	
+	
+	public deletePilot: Pilot ==> ()
+	deletePilot(newPilot) == pilotSet := pilotSet \ {newPilot};	
+	
+	public addSponsor: Sponsor ==> ()
+	addSponsor(newSponsor) == sponsorSet := sponsorSet union {newSponsor};	
+	
+	public deleteSponsor: Sponsor ==> ()
+	deleteSponsor(newSponsor) == sponsorSet := sponsorSet \ {newSponsor};	
+	
+	public addVehicle: Vehicle ==> ()
+	addVehicle(newVehicle) == vehicleSet := vehicleSet union {newVehicle};	
+	
+	public deleteVehicle: Vehicle ==> ()
+	deleteVehicle(newVehicle) == vehicleSet := vehicleSet \ {newVehicle};	
+
+end Team

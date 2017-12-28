@@ -1,0 +1,32 @@
+class Pilot
+
+types
+	public String = seq of char;
+	public Gender = <Male> | <Female>;
+	
+instance variables
+	public fullName: String;
+	public birthDay: RallyUtils`Date;
+	public gender: Gender;
+
+operations
+	
+	public Pilot: String * RallyUtils`Date * Gender ==> Pilot
+	Pilot(name, bday, pilotGender) == 
+	(
+		fullName := name;
+		birthDay := bday;
+		gender := pilotGender;	
+		return self;
+	);
+	
+	public getName: () ==> String 
+	getName() == return fullName;
+	
+	public getBirthday: () ==> RallyUtils`Date 
+	getBirthday() == return birthDay;
+	
+	public getGender: () ==> Gender
+	getGender() == return gender;
+	
+end Pilot
