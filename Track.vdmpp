@@ -42,5 +42,11 @@ operations
 	 */
 	 public getDistance: () ==> real
 	 getDistance() == return trackDistance;
+	 
+	 public editLocation: String ==> ()
+	 editLocation(newLocation) == trackLocation := newLocation;
+	 
+	 public editDistance: real ==> ()
+	 editDistance(newDistance) == trackDistance := newDistance; 
 
 end Track

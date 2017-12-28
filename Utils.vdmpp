@@ -3,33 +3,84 @@ class Utils
 types 
 	public String = seq of char;
 	
+	/*
+functions
+	public static checkIfExistsInSet: String * set of @elem +> @elem
+	checkIfExistsInSet(name, sequence) == 
+	(
+		forall competition in set sequence 
+		(
+			if equalString(name, competition.getName())
+			then competition else nil
+		)
+		
+		
+	);*/
+	
+	
 operations
 
-	public static checkIfExistsCompetition: String * set of Competition ==> bool
+	public static checkIfExistsCompetition: String * set of Competition ==> ?
 	checkIfExistsCompetition(name, sequence) == 
 	(
 		for all competition in set sequence do
 		(
 			if equalString(name, competition.getName())
-			then return true;
+			then return competition;
 		);
 		
-		return false;
+		return nil;
 	);
 	
-	public static checkIfExistsTrack: String * set of Track ==> bool
+	public static checkIfExistsTrack: String * set of Track ==> ?
 	checkIfExistsTrack(name, sequence) ==
 	(
 		for all track in set sequence do
 		(
 			if equalString(name, track.getName())
-			then return true;
+			then return track;
 		);
-		return false;
+		return nil;
+	);
+	
+	public static checkIfExistsRace: String * set of Race ==> ?
+	checkIfExistsRace(name, sequence) ==
+	(
+		for all race in set sequence do
+		(
+			if equalString(name, race.getName())
+			then return race;
+		);
+		return nil;
+	);
+	
+	public static checkIfExistsTrackInRace: String * set of Race ==> ?
+	checkIfExistsTrackInRace(name, sequence) == 
+	(
+		for all race in set sequence do
+		(
+			dcl track : Track := race.getTrack();
+			
+			if equalString(name, track.getName())
+			then return race;
+		);
+		return nil;
 	);
 	
 	public static equalString: String * String ==> bool
 	equalString(name, compName) == 
+	(
+		if len name <> len compName then return false;
+		
+		for i = 1 to len name by 1 do
+		(
+			if name(i) <> compName(i) then return false;
+		); 
+		return true
+	);
+	
+	public static equalDate: String * String ==> bool
+	equalDate(name, compName) == 
 	(
 		if len name <> len compName then return false;
 		

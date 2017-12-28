@@ -6,28 +6,37 @@ types
 
 instance variables
 	private name: String;
-	private season: nat;
+	private description: String;
 	private races: RaceSet;
 	
 operations
-	public Competition: String * nat ==> Competition
-	Competition(compName, compSeason) == 
+	public Competition: String * String ==> Competition
+	Competition(compName, compDescription) == 
 	(
 		name := compName;
-		season := compSeason;
+		description := compDescription;
 		races := {};
 		return self
-	)
-	post name = compName;
+	);
 	
 	public getName: () ==> String 
 	getName() == return name;
 	
-	public getSeason: () ==> nat
-	getSeason() == return season;
+	public getDescription: () ==> String
+	getDescription() == return description;
 	
-	public editSeason: nat ==> ()
-	editSeason(newSeason) == season := newSeason; 
+	public getRaces: () ==> RaceSet
+	getRaces() == return races;
+	
+	public editDescription: String ==> ()
+	editDescription(newDescription) == description := newDescription; 
+	
+	public addRace: Race ==> ()
+	addRace(race) == races := races union {race};
+	
+	public deleteRace: Race ==> ()
+	deleteRace(race) == races := races \ {race};
+	
 
 end Competition
 

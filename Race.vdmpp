@@ -1,3 +1,37 @@
+/**
+ * Race Class
+ */
 class Race
 
+types
+	public String = seq of char;
+	
+instance variables
+	private name: String;
+	private track: Track;
+	private date: String;
+	private results: map Participant to ResultTime;
+	
+operations
+	/**
+	 * Race Constructor, sets name, track, date and results map. Returns self.
+	 */
+	public Race: String * Track * String ==> Race
+	Race(raceName, raceTrack, raceDate) ==
+	(
+		name := raceName;
+		track := raceTrack;
+		date := raceDate;
+		results := {|->};
+		return self
+	);
+
+	public getTrack: () ==> Track
+	getTrack() == return track;
+
+	public getName: () ==> String
+	getName() == return name;
+	
+	public getDate: () ==> String
+	getDate() == return date;
 end Race

@@ -8,11 +8,13 @@ types
 	public String = seq of char;
 	public CompetitionSet = set of Competition;
 	public TrackSet = set of Track;
+	public RaceSet = set of Race;
 
 
 instance variables
 	private competitions: CompetitionSet;
 	private tracks: TrackSet;
+	private races: RaceSet;
 	
 	
 operations
@@ -20,7 +22,7 @@ operations
 	 * Rally constructor, creates empty set of Competitions and tracks. returns self.
 	 */
 	public Rally: () ==> Rally
-	Rally() == (competitions := {}; tracks := {}; return self);
+	Rally() == (competitions := {}; tracks := {}; races := {}; return self);
 	
 	/**
 	 * COMPETITION SCOPE
@@ -28,44 +30,46 @@ operations
 	/**
 	 * Rally addCompetition, creates new Competion with a name (identifier) and a season
 	 * adds the Competition to the set of Competitions and returns that set.
+	 * cannot create competition if exists already
 	 */
-	public addCompetition: String * nat ==> CompetitionSet
-	addCompetition(newCompName, newCompSeason) == 
+	public addCompetition: String * String ==> ?
+	addCompetition(newCompName, newCompDescription) == 
 	(
-		if Utils`checkIfExistsCompetition(newCompName, competitions) = false
+		if Utils`checkIfExistsCompetition(newCompName, competitions) = nil
 		then 
 		(
-			competitions := competitions union {new Competition(newCompName, newCompSeason)};
+			dcl compTemp: Competition := new Competition(newCompName, newCompDescription);
+			competitions := competitions union {compTemp};
+			return compTemp
 		);
-		return competitions
-	)
-	post competitions = competitions;
+		return false
+	);
 	
 	/**
 	 * Rally edit Competition, searchs for the competition name (identifier) and edits the 
 	 * season to the new value. Returns the set of Competitions
+	 * able to edit season
 	 */	
-	public editCompetition: String * nat ==> CompetitionSet
-	editCompetition(compName, newCompSeason) == 
+	public editCompetition: String * String ==> ?
+	editCompetition(compName, newCompDescription) == 
 	(
-	
 		for all competition in set competitions do
 		(
 			if Utils`equalString(competition.getName(), compName) 
 			then 
 			(
-				competition.editSeason(newCompSeason);
-				return competitions
+				competition.editDescription(newCompDescription);
+				return competition
 			)
 		);
-		return competitions;
+		return false;
 	);
 	
 	/**
 	 * Rally delete Competition, searchs for the competition name (identifier) and deletes the 
-	 * competition from the set. Returns the set of Competitions.
+	 * competition from the set. Returns the set of Competitions, or false.
 	 */	
-	public deleteCompetition: String ==> CompetitionSet
+	public deleteCompetition: String ==> ?
 	deleteCompetition(compName) ==
 	(
 		for all competition in set competitions do
@@ -77,39 +81,146 @@ operations
 				return competitions
 			)
 		);
-		return competitions;
+		return false;
 	);
 	
 	/**
 	 * getCompetitions, returns the competition set.
 	 */
-	 public getCompetitions: () ==> CompetitionSet
-	 getCompetitions() == return competitions;
+ 	public getCompetitions: () ==> CompetitionSet
+ 	getCompetitions() == return competitions;
 	 
 	/**
 	 * TRACK SCOPE
 	 */
 	 
-	 /**
-		* addTrack, creates a new track with name, location and distance, adds to tracks
-		* returns the set of tracks.
-		*/
-	 public addTrack: String * String * real ==> TrackSet
-	 addTrack(name, location, distance) == 
-	 (
-			if Utils`checkIfExistsTrack(name, tracks) = false
-			then 
-			(
-				tracks := tracks union {new Track(name, location, distance)};
-			);
-			return tracks
-		);		
+	/**
+	 * addTrack, creates a new track with name, location and distance, adds to tracks
+	 * returns the set of tracks.
+	 */
+	public addTrack: String * String * real ==> ?
+	addTrack(name, location, distance) == 
+	(
+		if Utils`checkIfExistsTrack(name, tracks) = nil
+		then 
+		(
+			dcl newTrack: Track := new Track(name, location, distance);
+			tracks := tracks union {newTrack};
+			return newTrack;
+		);
+		return false
+	);
+	
+	public editTrack: String * String * real ==> ?
+	editTrack(name, location, distance) ==
+	(
+		dcl tempTrack : ? := Utils`checkIfExistsTrack(name, tracks);
+		if tempTrack <> nil
+		then
+		(
+			dcl track: Track := tempTrack;
+			if location <> [] then track.editLocation(location);
+			if distance >= 1 then track.editDistance(distance);
+			return track;
+		)
+		else return false;
+	);
+	
+	public deleteTrack: String ==> ?
+	deleteTrack(name) ==
+	(
+		dcl tempTrack : ? := Utils`checkIfExistsTrack(name, tracks);
+		dcl tempRace : ?;
 		
-	 /**
-		* getTracks, returns the track set.
-		*/
-	 public getTracks: () ==> TrackSet
-	 getTracks() == return tracks;
+		--check if exists at all
+		if tempTrack = nil then return false;
+
+		--check if exists in any race
+		tempRace := Utils`checkIfExistsTrackInRace(name, races);
+		if tempRace <> nil then (return tempRace;)
+		else 
+		(
+			tracks := tracks \ {tempTrack};
+			return tracks;	
+		);		
+	);
+		
+ /**
+	* getTracks, returns the track set.
+	*/
+	public getTracks: () ==> TrackSet
+ 	getTracks() == return tracks;
+	 
+	/**
+	 * RACE SCOPE
+	 */
+	/**
+	 *	addRaceToCompetition
+	 	 --addicionar funcao addRaceToCompetition
+	   --the competition must exist
+	   --the race must not exist already
+	   --the track must exist
+	   --the date must be valid and not exist a race in the same track in the same day
+	 
+	 */ 
+	 public addRaceToCompetition: String * String * String * String ==> ?
+	 addRaceToCompetition(competitionName, raceName, trackName, date) == 
+	 (
+	 		dcl tempTrack : ? := Utils`checkIfExistsTrack(trackName, tracks);
+	 		dcl tempComp : ? := Utils`checkIfExistsCompetition(competitionName, competitions);	
+	 		
+	 		dcl race : Race;
+	 		dcl competition : Competition;
+	 		dcl track : Track;
+	 		
+	 		if Utils`checkIfExistsRace(raceName, races) <> nil
+	 		then return false;
+	 		
+	 		if tempTrack = nil
+	 		then return false;
+	 		
+	 		if tempComp = nil
+	 		then return false;
+	 
+	 		for all competitionLoop in set competitions do
+	 		(
+	 			for all raceLoop in set competitionLoop.getRaces() do
+	 			(
+	 				if Utils`equalString(raceLoop.getName(), raceName) 
+	 				then return false;
+	 				
+	 				if Utils`equalString(raceLoop.getTrack().getName(), trackName) and Utils`equalDate(raceLoop.getDate(), date)
+	 				then return false;
+	 			) 			
+	 		);
+	 		
+ 			track := tempTrack;
+ 			competition  := tempComp;
+ 			race := new Race(raceName, track, date);
+ 			
+ 			races := races union {race};
+ 			competition.addRace(race);
+ 			return race;
+	 );
+	 
+	 public deleteRace: String ==> ?
+	 deleteRace(raceName) ==
+	 (
+	 		dcl raceTemp: ? := Utils`checkIfExistsRace(raceName, races);
+	 		dcl race : Race;
+	 		
+	 		if raceTemp = nil then return false;
+	 		
+	 		race := raceTemp;
+	 		races := races \ {race};
+	 		
+	 		for all competitionLoop in set competitions do
+	 		(
+	 			competitionLoop.deleteRace(race);		
+	 		);
+	 		
+	 		return race;
+	 );
 
 end Rally
 
