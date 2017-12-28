@@ -1,11 +1,28 @@
-class Utils
+class RallyUtils
 
 types 
 	public String = seq of char;
+	public Date :: year : nat1
+								month: nat1
+								day : nat1
+								inv d == d.month <= 12 and
+								d.day <= amountDaysInMonth(d.year, d.month);
 	
-	/*
 functions
-	public static checkIfExistsInSet: String * set of @elem +> @elem
+
+	public amountDaysInMonth(year:nat1, month:nat1) res : nat1 ==
+		if leapYear(year) and month = 2 then 29
+		else if month in set {1,3,5,7,8,10,12} then 31
+		else if month in set {4,6,9,11} then 30
+		else 28;
+		
+	public static leapYear(year: nat1) res : bool ==
+		year mod 400 = 0 or
+		year mod 4 = 0 and year mod 100 <> 0; 
+		
+
+	/*
+	public static checkIfExistsInSet(name: String, elem:)
 	checkIfExistsInSet(name, sequence) == 
 	(
 		forall competition in set sequence 
@@ -15,7 +32,8 @@ functions
 		)
 		
 		
-	);*/
+	);
+	*/
 	
 	
 operations
@@ -79,20 +97,25 @@ operations
 		return true
 	);
 	
-	public static equalDate: String * String ==> bool
-	equalDate(name, compName) == 
+	public static equalDate: Date * Date ==> bool
+	equalDate(date1, date2) == 
 	(
-		if len name <> len compName then return false;
+		if date1.year <> date2.year then return false;
+		if date1.month <> date2.month then return false;
+		if date1.day <> date2.day then return false;
+		return true;
+	
+		/*if len name <> len compName then return false;
 		
 		for i = 1 to len name by 1 do
 		(
 			if name(i) <> compName(i) then return false;
 		); 
-		return true
+		return true*/
 	);
 	
 
-end Utils
+end RallyUtils
 
 
 

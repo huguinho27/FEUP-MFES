@@ -9,19 +9,20 @@ types
 instance variables
 	private name: String;
 	private track: Track;
-	private date: String;
+	private date: RallyUtils`Date;
+	
 	private results: map Participant to ResultTime;
 	
 operations
 	/**
 	 * Race Constructor, sets name, track, date and results map. Returns self.
 	 */
-	public Race: String * Track * String ==> Race
-	Race(raceName, raceTrack, raceDate) ==
+	public Race: String * Track * RallyUtils`Date ==> Race
+	Race(raceName, raceTrack, raceDateIN) ==
 	(
 		name := raceName;
 		track := raceTrack;
-		date := raceDate;
+		date := raceDateIN;
 		results := {|->};
 		return self
 	);
@@ -32,6 +33,7 @@ operations
 	public getName: () ==> String
 	getName() == return name;
 	
-	public getDate: () ==> String
+	public getDate: () ==> RallyUtils`Date
 	getDate() == return date;
+	
 end Race

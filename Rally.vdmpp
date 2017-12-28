@@ -35,7 +35,7 @@ operations
 	public addCompetition: String * String ==> ?
 	addCompetition(newCompName, newCompDescription) == 
 	(
-		if Utils`checkIfExistsCompetition(newCompName, competitions) = nil
+		if RallyUtils`checkIfExistsCompetition(newCompName, competitions) = nil
 		then 
 		(
 			dcl compTemp: Competition := new Competition(newCompName, newCompDescription);
@@ -55,7 +55,7 @@ operations
 	(
 		for all competition in set competitions do
 		(
-			if Utils`equalString(competition.getName(), compName) 
+			if RallyUtils`equalString(competition.getName(), compName) 
 			then 
 			(
 				competition.editDescription(newCompDescription);
@@ -74,7 +74,7 @@ operations
 	(
 		for all competition in set competitions do
 		(
-			if Utils`equalString(competition.getName(), compName) 
+			if RallyUtils`equalString(competition.getName(), compName) 
 			then 
 			(
 				competitions := competitions \ {competition};
@@ -101,7 +101,7 @@ operations
 	public addTrack: String * String * real ==> ?
 	addTrack(name, location, distance) == 
 	(
-		if Utils`checkIfExistsTrack(name, tracks) = nil
+		if RallyUtils`checkIfExistsTrack(name, tracks) = nil
 		then 
 		(
 			dcl newTrack: Track := new Track(name, location, distance);
@@ -114,7 +114,7 @@ operations
 	public editTrack: String * String * real ==> ?
 	editTrack(name, location, distance) ==
 	(
-		dcl tempTrack : ? := Utils`checkIfExistsTrack(name, tracks);
+		dcl tempTrack : ? := RallyUtils`checkIfExistsTrack(name, tracks);
 		if tempTrack <> nil
 		then
 		(
@@ -129,14 +129,14 @@ operations
 	public deleteTrack: String ==> ?
 	deleteTrack(name) ==
 	(
-		dcl tempTrack : ? := Utils`checkIfExistsTrack(name, tracks);
+		dcl tempTrack : ? := RallyUtils`checkIfExistsTrack(name, tracks);
 		dcl tempRace : ?;
 		
 		--check if exists at all
 		if tempTrack = nil then return false;
 
 		--check if exists in any race
-		tempRace := Utils`checkIfExistsTrackInRace(name, races);
+		tempRace := RallyUtils`checkIfExistsTrackInRace(name, races);
 		if tempRace <> nil then (return tempRace;)
 		else 
 		(
@@ -163,17 +163,17 @@ operations
 	   --the date must be valid and not exist a race in the same track in the same day
 	 
 	 */ 
-	 public addRaceToCompetition: String * String * String * String ==> ?
+	 public addRaceToCompetition: String * String * String * RallyUtils`Date ==> ?
 	 addRaceToCompetition(competitionName, raceName, trackName, date) == 
 	 (
-	 		dcl tempTrack : ? := Utils`checkIfExistsTrack(trackName, tracks);
-	 		dcl tempComp : ? := Utils`checkIfExistsCompetition(competitionName, competitions);	
+	 		dcl tempTrack : ? := RallyUtils`checkIfExistsTrack(trackName, tracks);
+	 		dcl tempComp : ? := RallyUtils`checkIfExistsCompetition(competitionName, competitions);	
 	 		
 	 		dcl race : Race;
 	 		dcl competition : Competition;
 	 		dcl track : Track;
 	 		
-	 		if Utils`checkIfExistsRace(raceName, races) <> nil
+	 		if RallyUtils`checkIfExistsRace(raceName, races) <> nil
 	 		then return false;
 	 		
 	 		if tempTrack = nil
@@ -186,10 +186,10 @@ operations
 	 		(
 	 			for all raceLoop in set competitionLoop.getRaces() do
 	 			(
-	 				if Utils`equalString(raceLoop.getName(), raceName) 
+	 				if RallyUtils`equalString(raceLoop.getName(), raceName) 
 	 				then return false;
 	 				
-	 				if Utils`equalString(raceLoop.getTrack().getName(), trackName) and Utils`equalDate(raceLoop.getDate(), date)
+	 				if RallyUtils`equalString(raceLoop.getTrack().getName(), trackName) and RallyUtils`equalDate(raceLoop.getDate(), date)
 	 				then return false;
 	 			) 			
 	 		);
@@ -206,7 +206,7 @@ operations
 	 public deleteRace: String ==> ?
 	 deleteRace(raceName) ==
 	 (
-	 		dcl raceTemp: ? := Utils`checkIfExistsRace(raceName, races);
+	 		dcl raceTemp: ? := RallyUtils`checkIfExistsRace(raceName, races);
 	 		dcl race : Race;
 	 		
 	 		if raceTemp = nil then return false;
