@@ -29,24 +29,29 @@ operations
 	 *	getName, returns name.
 	 */
 	 public getName: () ==> String
-	 getName() == return trackName;
+	 getName() == return trackName
+	 post RESULT = trackName;
 	 
 	/**
 	 *	getLocation, returns location.
 	 */
 	 public getLocation: () ==> String
-	 getLocation() == return trackLocation;
+	 getLocation() == return trackLocation
+	 post RESULT = trackLocation;
 	 
 	/**
 	 *	getDistance, returns distance.
 	 */
 	 public getDistance: () ==> real
-	 getDistance() == return trackDistance;
+	 getDistance() == return trackDistance
+	 post RESULT = trackDistance;
 	 
 	 public editLocation: String ==> ()
-	 editLocation(newLocation) == trackLocation := newLocation;
+	 editLocation(newLocation) == trackLocation := newLocation
+	 post trackLocation = newLocation;
 	 
 	 public editDistance: real ==> ()
-	 editDistance(newDistance) == trackDistance := newDistance; 
+	 editDistance(newDistance) == trackDistance := newDistance
+	 post trackDistance = newDistance;
 
 end Track
