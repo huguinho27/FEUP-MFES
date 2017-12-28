@@ -20,6 +20,16 @@ functions
 		year mod 400 = 0 or
 		year mod 4 = 0 and year mod 100 <> 0; 
 		
+	public static equalDate(date1:Date, date2:Date) res : bool == 
+	(
+		if date1.year <> date2.year then false
+		else
+			if date1.month <> date2.month then false
+			else 
+				if date1.day <> date2.day then false 
+				else true
+	);
+		
 
 	/*
 	public static checkIfExistsInSet(name: String, elem:)
@@ -95,23 +105,6 @@ operations
 			if name(i) <> compName(i) then return false;
 		); 
 		return true
-	);
-	
-	public static equalDate: Date * Date ==> bool
-	equalDate(date1, date2) == 
-	(
-		if date1.year <> date2.year then return false;
-		if date1.month <> date2.month then return false;
-		if date1.day <> date2.day then return false;
-		return true;
-	
-		/*if len name <> len compName then return false;
-		
-		for i = 1 to len name by 1 do
-		(
-			if name(i) <> compName(i) then return false;
-		); 
-		return true*/
 	);
 	
 
