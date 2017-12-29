@@ -18,9 +18,6 @@ operations
 		return self;
 	);
 	
-	public getName: () ==> String
-	getName() == return pilot.getName();
-	
 	public getPilot: () ==> Pilot
 	getPilot() == return pilot;
 	

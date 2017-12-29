@@ -32,21 +32,6 @@ functions
 				if date1.day <> date2.day then false 
 				else true
 	);
-		
-
-	/*
-	public static checkIfExistsInSet(name: String, elem:)
-	checkIfExistsInSet(name, sequence) == 
-	(
-		forall competition in set sequence 
-		(
-			if equalString(name, competition.getName())
-			then competition else nil
-		)
-		
-		
-	);
-	*/
 	
 	
 operations
@@ -81,6 +66,61 @@ operations
 		(
 			if equalString(name, race.getName())
 			then return race;
+		);
+		return nil;
+	);
+	
+	public static checkIfExistsPilot: String * set of Pilot ==> ?
+	checkIfExistsPilot(name, sequence) ==
+	(
+		for all obj in set sequence do
+		(
+			if equalString(name, obj.getName())
+			then return obj;
+		);
+		return nil;
+	);
+	
+	public static checkIfExistsTeam: String * set of Team ==> ?
+	checkIfExistsTeam(name, sequence) ==
+	(
+		for all obj in set sequence do
+		(
+			if equalString(name, obj.getName())
+			then return obj;
+		);
+		return nil;
+	);
+	
+	public static checkIfExistsSponsor: String * set of Sponsor ==> ?
+	checkIfExistsSponsor(name, sequence) ==
+	(
+		for all obj in set sequence do
+		(
+			if equalString(name, obj.getName())
+			then return obj;
+		);
+		return nil;
+	);
+	
+	public static checkIfExistsVehicle: String * set of Vehicle ==> ?
+	checkIfExistsVehicle(name, sequence) ==
+	(
+		for all obj in set sequence do
+		(
+			if equalString(name, obj.getName())
+			then return obj;
+		);
+		return nil;
+	);
+	
+	public static checkIfExistsParticipant: String * set of Participant ==> ?
+	checkIfExistsParticipant(name, sequence) ==
+	(
+		for all obj in set sequence do
+		(
+			if equalString(name, obj.getName())
+			then return obj;
 		);
 		return nil;
 	);

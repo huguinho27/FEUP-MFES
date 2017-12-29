@@ -9,12 +9,22 @@ types
 	public CompetitionSet = set of Competition;
 	public TrackSet = set of Track;
 	public RaceSet = set of Race;
+	public PilotSet = set of Pilot;
+	public ParticipantSet = set of Participant;
+	public TeamSet = set of Team;
+	public VehicleSet = set of Vehicle;
+	public SponsorSet = set of Sponsor;
 
 
 instance variables
 	private competitions: CompetitionSet;
 	private tracks: TrackSet;
 	private races: RaceSet;
+	private pilots: PilotSet;
+	private participants: ParticipantSet;
+	private teams: TeamSet;
+	private sponsors: SponsorSet;
+	private vehicles: VehicleSet;
 	
 	
 operations
@@ -22,7 +32,18 @@ operations
 	 * Rally constructor, creates empty set of Competitions and tracks. returns self.
 	 */
 	public Rally: () ==> Rally
-	Rally() == (competitions := {}; tracks := {}; races := {}; return self);
+	Rally() == 
+	(
+		competitions := {}; 
+		tracks := {}; 
+		races := {};
+		pilots := {}; 
+		teams := {}; 
+		participants := {}; 
+		vehicles := {};
+		sponsors := {};
+		return self
+	);
 	
 	/**
 	 * COMPETITION SCOPE
@@ -44,26 +65,7 @@ operations
 		);
 		return false
 	);
-	
-	/**
-	 * Rally edit Competition, searchs for the competition name (identifier) and edits the 
-	 * season to the new value. Returns the set of Competitions
-	 * able to edit season
-	 */	
-	public editCompetition: String * String ==> ?
-	editCompetition(compName, newCompDescription) == 
-	(
-		for all competition in set competitions do
-		(
-			if RallyUtils`equalString(competition.getName(), compName) 
-			then 
-			(
-				competition.editDescription(newCompDescription);
-				return competition
-			)
-		);
-		return false;
-	);
+
 	
 	/**
 	 * Rally delete Competition, searchs for the competition name (identifier) and deletes the 
@@ -84,11 +86,6 @@ operations
 		return false;
 	);
 	
-	/**
-	 * getCompetitions, returns the competition set.
-	 */
- 	public getCompetitions: () ==> CompetitionSet
- 	getCompetitions() == return competitions;
 	 
 	/**
 	 * TRACK SCOPE
@@ -110,21 +107,7 @@ operations
 		);
 		return false
 	);
-	
-	public editTrack: String * String * real ==> ?
-	editTrack(name, location, distance) ==
-	(
-		dcl tempTrack : ? := RallyUtils`checkIfExistsTrack(name, tracks);
-		if tempTrack <> nil
-		then
-		(
-			dcl track: Track := tempTrack;
-			if location <> [] then track.editLocation(location);
-			if distance >= 1 then track.editDistance(distance);
-			return track;
-		)
-		else return false;
-	);
+
 	
 	public deleteTrack: String ==> ?
 	deleteTrack(name) ==
@@ -145,20 +128,14 @@ operations
 		);		
 	);
 		
- /**
-	* getTracks, returns the track set.
-	*/
-	public getTracks: () ==> TrackSet
- 	getTracks() == return tracks;
 	 
 	/**
 	 * RACE SCOPE
 	 */
 	/**
 	 *	addRaceToCompetition
-	 	 --addicionar funcao addRaceToCompetition
 	   --the competition must exist
-	   --the race must not exist already
+	   --the race must not exist 
 	   --the track must exist
 	   --the date must be valid and not exist a race in the same track in the same day
 	 
@@ -196,8 +173,8 @@ operations
 	 		
  			track := tempTrack;
  			competition  := tempComp;
- 			race := new Race(raceName, track, date);
  			
+ 			race := new Race(raceName, track, date);
  			races := races union {race};
  			competition.addRace(race);
  			return race;
@@ -221,6 +198,274 @@ operations
 	 		
 	 		return race;
 	 );
+	 
+	/**
+	 * PILOT SCOPE
+	 */
+	public addPilot: String * RallyUtils`Date * Pilot`Gender ==> ?
+	addPilot(name, bday, gender) ==
+	(
+		if RallyUtils`checkIfExistsPilot(name, pilots) <> nil
+		then return false
+		else 
+		(
+			dcl pilot : Pilot := new Pilot(name, bday, gender);
+			
+			pilots := pilots union {pilot};
+			return pilot;
+		);
+	);
+	/**
+	 *
+	 -- verify if no participant has it
+	 */
+	public deletePilot: String ==> bool
+	deletePilot(name) == 
+	(
+		dcl tempPilot : ? := RallyUtils`checkIfExistsPilot(name, pilots);
+		dcl pilot : Pilot;
+		
+		if tempPilot = nil then return false else pilot := tempPilot;
+	
+		for all participant in set participants do 
+		(
+			if RallyUtils`equalString(participant.getPilot().getName(), name) then return false;
+		);
+		
+		pilots := pilots \ {pilot};
+		
+		for all team in set teams do
+		(
+			team.deletePilot(pilot);
+		);
+		
+		return true;
+	);
+
+ 	
+ 	
+ 	
+ 	/**
+	 * VEHICLE SCOPE
+	 */
+	public addVehicle: String * String * String * String ==> ?
+	addVehicle(name, brand, model, plate) ==
+	(
+		if RallyUtils`checkIfExistsVehicle(name, vehicles) <> nil
+		then return false
+		else 
+		(
+			dcl vehicle : Vehicle := new Vehicle(name, brand, model, plate);
+			
+			vehicles := vehicles union {vehicle};
+			return vehicle;
+		);
+	);
+	/**
+	 *
+	 -- verify if no participant has it
+	 */
+	public deleteVehicle: String ==> bool
+	deleteVehicle(name) == 
+	(
+		dcl tempVehicle : ? := RallyUtils`checkIfExistsVehicle(name, vehicles);
+		dcl vehicle : Vehicle;
+		
+		if tempVehicle = nil then return false else vehicle := tempVehicle;
+	
+		for all participant in set participants do 
+		(
+			if RallyUtils`equalString(participant.getVehicle().getName(), name) then return false;
+		);
+		
+		vehicles := vehicles \ {vehicle};
+		
+		for all team in set teams do
+		(
+			team.deleteVehicle(vehicle);
+		);
+		
+		return true;
+	);
+	
+ 	
+	
+	/**
+	 *	SPONSOR SCOPE
+	 */
+	public addSponsor: String * String ==> ?
+	addSponsor(name, desc) == 
+	(
+			if RallyUtils`checkIfExistsSponsor(name, sponsors) <> nil
+			then return false
+			else
+			(
+					dcl sponsor : Sponsor :=  new Sponsor(name, desc);
+					sponsors := sponsors union {sponsor};
+					return sponsor;
+			)
+	);
+	
+	public deleteSponsor: String ==> bool
+	deleteSponsor(name) == 
+	(
+		dcl tempSponsor : ? := RallyUtils`checkIfExistsSponsor(name, sponsors);
+		dcl sponsor : Sponsor;
+		
+		if tempSponsor = nil then return false else sponsor := tempSponsor;
+	
+		sponsors := sponsors \ {sponsor};
+		
+		for all team in set teams do
+		(
+			team.deleteSponsor(sponsor);
+		);
+		
+		return true;
+	);
+	
+	
+	/**
+	 *	TEAM SCOPE
+	 */
+	 
+	public addTeam: String ==> ?
+	addTeam(teamName) ==
+	(
+			if RallyUtils`checkIfExistsTeam(teamName, teams) <> nil
+			then return false
+			else
+			(
+					dcl team : Team := new Team(teamName);
+					teams := teams union {team};
+					return team;
+			);
+	);
+	
+	public deleteTeam: String ==> bool
+	deleteTeam(teamName) == 
+	(
+			dcl teamTemp : ? := RallyUtils`checkIfExistsTeam(teamName, teams);
+			dcl team: Team;
+			
+			if teamTemp = nil then return false else team := teamTemp;
+			
+			for all participant in set participants do 
+			(
+				if RallyUtils`equalString(participant.getTeam().getName(), teamName) then return false;
+			);
+			
+			teams := teams \ {team};
+			return true;
+	);
+	 
+	public addPilotToTeam: String * String ==> bool
+	addPilotToTeam(pilotName, teamName) == 
+	(
+		dcl tempPilot : ? := RallyUtils`checkIfExistsPilot(pilotName, pilots);
+		dcl pilot : Pilot;
+		
+		dcl tempTeam : ? := RallyUtils`checkIfExistsTeam(teamName, teams);
+		dcl team : Team;
+		
+		if tempPilot = nil then return false else pilot := tempPilot;
+		if tempTeam = nil then return false else team := tempTeam;
+		
+		team.addPilot(pilot);
+		return true;
+	);
+	
+	public deletePilotFromTeam: String * String ==> bool
+	deletePilotFromTeam(pilotName, teamName) == 
+	(
+		dcl tempPilot : ? := RallyUtils`checkIfExistsPilot(pilotName, pilots);
+		dcl pilot : Pilot;
+		
+		dcl tempTeam : ? := RallyUtils`checkIfExistsTeam(teamName, teams);
+		dcl team : Team;
+		
+		if tempPilot = nil then return false else pilot := tempPilot;
+		if tempTeam = nil then return false else team := tempTeam;
+		
+		team.deletePilot(pilot);
+		return true;
+	);
+	
+	public addSponsorToTeam: String * String ==> bool
+	addSponsorToTeam(sponsorName, teamName) == 
+	(
+		dcl tempSponsor : ? := RallyUtils`checkIfExistsSponsor(sponsorName, sponsors);
+		dcl sponsor : Sponsor;
+		
+		dcl tempTeam : ? := RallyUtils`checkIfExistsTeam(teamName, teams);
+		dcl team : Team;
+		
+		if tempSponsor = nil then return false else sponsor := tempSponsor;
+		if tempTeam = nil then return false else team := tempTeam;
+		
+		team.addSponsor(sponsor);
+		return true;
+	);
+	
+	public deleteSponsorFromTeam: String * String ==> bool
+	deleteSponsorFromTeam(sponsorName, teamName) == 
+	(
+		dcl tempSponsor : ? := RallyUtils`checkIfExistsSponsor(sponsorName, sponsors);
+		dcl sponsor : Sponsor;
+		
+		dcl tempTeam : ? := RallyUtils`checkIfExistsTeam(teamName, teams);
+		dcl team : Team;
+		
+		if tempSponsor = nil then return false else sponsor := tempSponsor;
+		if tempTeam = nil then return false else team := tempTeam;
+		
+		team.deleteSponsor(sponsor);
+		return true;
+	);
+	
+	public addVehicleToTeam: String * String ==> bool
+	addVehicleToTeam(vehicleName, teamName) == 
+	(
+		dcl tempVehicle : ? := RallyUtils`checkIfExistsVehicle(vehicleName, vehicles);
+		dcl vehicle : Vehicle;
+		
+		dcl tempTeam : ? := RallyUtils`checkIfExistsTeam(teamName, teams);
+		dcl team : Team;
+		
+		if tempVehicle = nil then return false else vehicle := tempVehicle;
+		if tempTeam = nil then return false else team := tempTeam;
+		
+		team.addVehicle(vehicle);
+		return true;
+	);
+	
+	public deleteVehicleFromTeam: String * String ==> bool
+	deleteVehicleFromTeam(vehicleName, teamName) == 
+	(
+		dcl tempVehicle : ? := RallyUtils`checkIfExistsVehicle(vehicleName, vehicles);
+		dcl vehicle : Vehicle;
+		
+		dcl tempTeam : ? := RallyUtils`checkIfExistsTeam(teamName, teams);
+		dcl team : Team;
+		
+		if tempVehicle = nil then return false else vehicle := tempVehicle;
+		if tempTeam = nil then return false else team := tempTeam;
+		
+		team.deleteVehicle(vehicle);
+		return true;
+	);
+	
+	/**
+	 *	PARTICIPANT SCOPE
+	 */
+	 /**
+	  *	setParticipantResultInRace
+	  */
+	 
+	
+
+	
+	
 
 end Rally
 
