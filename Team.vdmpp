@@ -27,8 +27,8 @@ operations
 	getName() == return name
 	post RESULT = name;
 	
-	public getPilotSet: () ==> PilotSet
-	getPilotSet() == return pilotSet
+	public getPilots(): () ==> PilotSet
+	getPilots() == return pilotSet
 	post RESULT = pilotSet;
 	
 	public getSponsorSet: () ==> SponsorSet

@@ -137,6 +137,7 @@ operations
 	   --the competition must exist
 	   --the race must not exist 
 	   --the track must exist
+	   --the competition can only have one race in one day
 	   --the date must be valid and not exist a race in the same track in the same day
 	 
 	 */ 
@@ -169,6 +170,11 @@ operations
 	 				if RallyUtils`equalString(raceLoop.getTrack().getName(), trackName) and RallyUtils`equalDate(raceLoop.getDate(), date)
 	 				then return false;
 	 			) 			
+	 		);
+	 		
+	 		for all raceCheck in set competition.getRaces() do
+	 		(
+	 				if RallyUtils`equalDate(raceCheck.getDate(), date) then return false;
 	 		);
 	 		
  			track := tempTrack;
@@ -458,9 +464,63 @@ operations
 	/**
 	 *	PARTICIPANT SCOPE
 	 */
-	 /**
-	  *	setParticipantResultInRace
-	  */
+ /**
+  *	setParticipantResultInRace
+  --verify if pilot is not running in the same day
+  --verify if vehicle is not running in the same day
+  --verify if the car and the pilot belongs in the team
+  --the pilot and the vehicle cannot run in the same race (already verified in restriction above)
+  --
+  */
+  public setParticipantResultInRace: String * String * String * String  * real ==> bool
+  setParticipantResultInRace(raceName, pilotName, vehicleName, teamName, resultTime) == 
+  (
+  		dcl raceTemp : ? := RallyUtils`checkIfExistsRace(raceName, races);
+  		dcl pilotTemp : ? := RallyUtils`checkIfExistsPilot(pilotName, pilots);
+  		dcl vehicleTemp : ? := RallyUtils`checkIfExistsVehicle(vehicleName, vehicles);
+  		dcl teamTemp : ? := RallyUtils`checkIfExistsTeam(teamName, teams);
+  		
+  		dcl race : Race;
+  		dcl pilot : Pilot;
+  		dcl vehicle : Vehicle;
+  		dcl team : Team;
+  		dcl result : ResultTime;
+  		dcl participant : Participant;
+  		
+  		if raceTemp = nil then return false else race := raceTemp;
+  		if pilotTemp = nil then return false else pilot := pilotTemp;
+  		if vehicleTemp = nil then return false else vehicle := vehicleTemp;
+  		if teamTemp = nil then return false else team := teamTemp;
+  		
+  		for all raceLoop in set races do
+  		(
+  				for all participantLoop in set dom raceLoop.getResults() do
+  				(
+  						if RallyUtils`equalString(pilot.getName(), participantLoop.getPilot().getName()) and RallyUtils`equalDate(race.getDate(), raceLoop.getDate())
+  						then return false;
+  						
+   						if RallyUtils`equalString(vehicle.getName(), participantLoop.getVehicle().getName()) and RallyUtils`equalDate(race.getDate(), raceLoop.getDate())
+  						then return false;					
+  				);
+  		);
+  		
+  		for all participantLoop in set dom race.getResults() do
+  		(
+  				if RallyUtils`equalString(pilot.getName(), participantLoop.getPilot().getName()) then return false;
+  				if RallyUtils`equalString(vehicle.getName(), participantLoop.getVehicle().getName()) then return false;
+  		
+  		);
+  		
+  		if not pilot in set team.getPilots() then return false;
+  		if not vehicle in set team.getVehicles() then return false;
+  		
+  		result := new ResultTime(resultTime);
+  		participant := new Participant(pilot, team, vehicle);
+  		
+  		race.addResult(participant, result);
+  		
+  		return true;
+  );
 	 
 	
 

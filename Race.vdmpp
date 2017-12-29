@@ -39,4 +39,15 @@ operations
 	getDate() == return date
 	post RESULT = date;
 	
+	public getResults: () ==> map Participant to ResultTime
+	getResults() == return results
+	post RESULT = results;
+	
+	public addResult: Participant * ResultTime ==> ()
+	addResult(participant, result) ==
+	(
+			results := results union {participant |-> result};
+	);
+	
+	
 end Race
