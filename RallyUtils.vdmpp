@@ -114,16 +114,16 @@ operations
 		return nil;
 	);
 	
-	/*public static checkIfExistsParticipant: String * set of Participant ==> ?
+	public static checkIfExistsParticipant: String * set of Participant ==> ?
 	checkIfExistsParticipant(name, sequence) ==
 	(
 		for all obj in set sequence do
 		(
-			if equalString(name, obj.getName())
+			if equalString(name, obj.getPilot().getName())
 			then return obj;
 		);
 		return nil;
-	);*/
+	);
 	
 	public static checkIfExistsTrackInRace: String * set of Race ==> ?
 	checkIfExistsTrackInRace(name, sequence) == 

@@ -47,7 +47,13 @@ operations
 	public addResult: Participant * ResultTime ==> ()
 	addResult(participant, result) ==
 	(
-			results := results union {participant |-> result};
+			results := results munion {participant |-> result};
+	);
+	
+	public deleteResult: Participant  ==> ()
+	deleteResult(participant) == 
+	(
+			results := {participant} <-: results;
 	);
 	
 	

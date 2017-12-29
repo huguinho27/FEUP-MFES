@@ -525,7 +525,28 @@ operations
   		return true;
   );
   
+  public deletePilotParticipantFromRace: String * String ==> bool
+  deletePilotParticipantFromRace(pilotName, raceName) == 
+  (
+  		dcl raceTemp : ? := RallyUtils`checkIfExistsRace(raceName, races);
+  		dcl participantTemp : ?;
+  		
+			dcl race : Race;
+			dcl participant : Participant;
+  		
+			if raceTemp = nil then return false else race := raceTemp;
+  		
+  		participantTemp := RallyUtils`checkIfExistsParticipant(pilotName, dom race.getResults());
+  		
+  		if participantTemp = nil then return false else participant := participantTemp;
+  	
   
+  		participants := participants \ {participant};
+  		
+  		race.deleteResult(participant);
+  		
+  		return true;
+  );
   
   
 	 

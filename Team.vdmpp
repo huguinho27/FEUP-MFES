@@ -28,7 +28,7 @@ operations
 	getName() == return name
 	post RESULT = name;
 	
-	public getPilots(): () ==> PilotSet
+	public getPilots: () ==> PilotSet
 	getPilots() == return pilotSet
 	post RESULT = pilotSet;
 	
@@ -36,8 +36,8 @@ operations
 	getSponsorSet() == return sponsorSet
 	post RESULT = sponsorSet;
 	
-	public getVehicleSet: () ==> VehicleSet
-	getVehicleSet() == return vehicleSet
+	public getVehicles: () ==> VehicleSet
+	getVehicles() == return vehicleSet
 	post RESULT = vehicleSet;
 	
 	public addPilot: Pilot ==> ()
