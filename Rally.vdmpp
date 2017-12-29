@@ -518,10 +518,16 @@ operations
   		result := new ResultTime(resultTime);
   		participant := new Participant(pilot, team, vehicle);
   		
+  		participants := participants union {participant};
+  		
   		race.addResult(participant, result);
   		
   		return true;
   );
+  
+  
+  
+  
 	 
 	
 
