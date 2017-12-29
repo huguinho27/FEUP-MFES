@@ -25,7 +25,8 @@ operations
 		date := raceDateIN;
 		results := {|->};
 		return self
-	);
+	)
+	post name = raceName and track = raceTrack and date = raceDateIN and results = {|->};
 
 	public getTrack: () ==> Track
 	getTrack() == return track

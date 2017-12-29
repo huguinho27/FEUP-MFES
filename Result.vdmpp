@@ -20,7 +20,8 @@ operations
 	 * ResultPoints constructor, receives points and sets the currPoints, returns self.
 	 */	
 	public ResultPoints: nat ==> ResultPoints
-	ResultPoints(points) == (currPoints := points; return self);
+	ResultPoints(points) == (currPoints := points; return self)
+	post currPoints = points;
 	
 	/**
 	 * getPoints function, returns the current points.
@@ -60,18 +61,21 @@ operations
 	 * ResultTime constructor, receives time and sets the currTime, returns self.
 	 */	
 	public ResultTime: real ==> ResultTime
-	ResultTime(time) == (currTime := time; return self);
+	ResultTime(time) == (currTime := time; return self)
+	post currTime = time;
 	
 	/**
 	 * getTime, returns the currTime.
 	 */		
 	public getTime: () ==> real
-	getTime() == return currTime;
+	getTime() == return currTime
+	post RESULT = currTime;
 	
 	/**
 	 * editTime function, receives new time and updates the currTime, returns self.
 	 */	
 	public editTime: nat ==> ResultTime
-	editTime(newTime) == (currTime := newTime; return self);
+	editTime(newTime) == (currTime := newTime; return self)
+	post currTime = newTime;
 
 end ResultTime

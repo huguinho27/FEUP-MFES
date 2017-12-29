@@ -17,8 +17,9 @@ operations
 		brand := vehicleBrand;
 		model := vehicleModel;
 		plate := vehiclePlate;
-		return self;
-	);
+		return self
+	)
+	post name = vehicleName and brand = vehicleBrand and model = vehicleModel and plate = vehiclePlate;
 	
 	public getName: () ==> String 
 	getName() == return name
