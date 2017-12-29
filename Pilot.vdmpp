@@ -21,12 +21,15 @@ operations
 	);
 	
 	public getName: () ==> String 
-	getName() == return fullName;
+	getName() == return fullName
+	post RESULT = fullName;
 	
 	public getBirthday: () ==> RallyUtils`Date 
-	getBirthday() == return birthDay;
+	getBirthday() == return birthDay
+	post RESULT = birthDay;
 	
 	public getGender: () ==> Gender
-	getGender() == return gender;
+	getGender() == return gender
+	post RESULT = gender;
 	
 end Pilot

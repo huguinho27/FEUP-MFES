@@ -19,12 +19,15 @@ operations
 	);
 	
 	public getPilot: () ==> Pilot
-	getPilot() == return pilot;
+	getPilot() == return pilot
+	post RESULT = pilot;
 	
 	public getTeam: () ==> Team
-	getTeam() == return team;
+	getTeam() == return team
+	post RESULT = team;
 	
 	public getVehicle: () ==> Vehicle
-	getVehicle() == return vehicle;
+	getVehicle() == return vehicle
+	post RESULT = vehicle;
 	
 end Participant

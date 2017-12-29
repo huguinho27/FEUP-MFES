@@ -24,33 +24,48 @@ operations
 	);
 	
 	public getName: () ==> String
-	getName() == return name;
+	getName() == return name
+	post RESULT = name;
 	
 	public getPilotSet: () ==> PilotSet
-	getPilotSet() == return pilotSet;
+	getPilotSet() == return pilotSet
+	post RESULT = pilotSet;
 	
 	public getSponsorSet: () ==> SponsorSet
-	getSponsorSet() == return sponsorSet;
+	getSponsorSet() == return sponsorSet
+	post RESULT = sponsorSet;
 	
 	public getVehicleSet: () ==> VehicleSet
-	getVehicleSet() == return vehicleSet;
+	getVehicleSet() == return vehicleSet
+	post RESULT = vehicleSet;
 	
 	public addPilot: Pilot ==> ()
-	addPilot(newPilot) == pilotSet := pilotSet union {newPilot};	
+	addPilot(newPilot) == pilotSet := pilotSet union {newPilot}
+	post newPilot in set pilotSet;
 	
 	public deletePilot: Pilot ==> ()
-	deletePilot(newPilot) == pilotSet := pilotSet \ {newPilot};	
+	deletePilot(newPilot) == pilotSet := pilotSet \ {newPilot}
+	pre newPilot in set pilotSet
+	post newPilot not in set pilotSet;
 	
 	public addSponsor: Sponsor ==> ()
-	addSponsor(newSponsor) == sponsorSet := sponsorSet union {newSponsor};	
+	addSponsor(newSponsor) == sponsorSet := sponsorSet union {newSponsor}
+	pre newSponsor not in set sponsorSet
+	post newSponsor in set sponsorSet;
 	
 	public deleteSponsor: Sponsor ==> ()
-	deleteSponsor(newSponsor) == sponsorSet := sponsorSet \ {newSponsor};	
+	deleteSponsor(newSponsor) == sponsorSet := sponsorSet \ {newSponsor}
+	pre newSponsor in set sponsorSet
+	post newSponsor not in set sponsorSet;
 	
 	public addVehicle: Vehicle ==> ()
-	addVehicle(newVehicle) == vehicleSet := vehicleSet union {newVehicle};	
+	addVehicle(newVehicle) == vehicleSet := vehicleSet union {newVehicle}
+	pre newVehicle not in set vehicleSet
+	post newVehicle in set vehicleSet;
 	
 	public deleteVehicle: Vehicle ==> ()
-	deleteVehicle(newVehicle) == vehicleSet := vehicleSet \ {newVehicle};	
+	deleteVehicle(newVehicle) == vehicleSet := vehicleSet \ {newVehicle}
+	pre newVehicle in set vehicleSet
+	post newVehicle not in set vehicleSet;
 
 end Team

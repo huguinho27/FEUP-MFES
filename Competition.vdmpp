@@ -20,22 +20,30 @@ operations
 	);
 	
 	public getName: () ==> String 
-	getName() == return name;
+	getName() == return name
+	post RESULT = name;
 	
 	public getDescription: () ==> String
-	getDescription() == return description;
+	getDescription() == return description
+	post RESULT = description;
 	
 	public getRaces: () ==> RaceSet
-	getRaces() == return races;
+	getRaces() == return races
+	post RESULT = races;
 	
 	public editDescription: String ==> ()
-	editDescription(newDescription) == description := newDescription; 
+	editDescription(newDescription) == description := newDescription
+	post description = newDescription;
 	
 	public addRace: Race ==> ()
-	addRace(race) == races := races union {race};
+	addRace(race) == races := races union {race}
+	pre race not in set races
+	post race in set races;
 	
 	public deleteRace: Race ==> ()
-	deleteRace(race) == races := races \ {race};
+	deleteRace(race) == races := races \ {race}
+	pre race in set races
+	post race not in set races;
 	
 
 end Competition

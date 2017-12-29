@@ -21,15 +21,19 @@ operations
 	);
 	
 	public getName: () ==> String 
-	getName() == return name;
+	getName() == return name
+	post RESULT = name;
 	
 	public getBrand: () ==> String 
-	getBrand() == return brand;
+	getBrand() == return brand
+	post RESULT = brand;
 	
 	public getModel: () ==> String 
-	getModel() == return model;
+	getModel() == return model
+	post RESULT = model;
 	
 	public getPlate: () ==> String 
-	getPlate() == return plate;
+	getPlate() == return plate
+	post RESULT = plate;
 	
 end Vehicle

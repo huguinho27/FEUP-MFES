@@ -26,7 +26,8 @@ operations
 	 * getPoints function, returns the current points.
 	 */		
 	public getPoints: () ==> nat
-	getPoints() == return currPoints;
+	getPoints() == return currPoints
+	post RESULT = currPoints;
 
 	/**
 	 * addPoints funtion, adds more Points to the current Points, returns self.
@@ -38,7 +39,8 @@ operations
 	 * editPoints function, edits the currentPoints, return self.
 	 */	
 	public editPoints: nat ==> ResultPoints
-	editPoints(newPoints) == (currPoints := newPoints; return self);
+	editPoints(newPoints) == (currPoints := newPoints; return self)
+	post currPoints = newPoints;
 
 end ResultPoints
 

@@ -18,12 +18,15 @@ operations
 	);
 	
 	public getName: () ==> String
-	getName() == return name;
+	getName() == return name
+	post RESULT = name;
 	
 	public getDescription: () ==> String
-	getDescription() == return description;
+	getDescription() == return description
+	post RESULT = description;
 	
 	public editDescription: String ==> ()
-	editDescription(newDescription) == description := newDescription;
+	editDescription(newDescription) == description := newDescription
+	post description = newDescription;
 
 end Sponsor
