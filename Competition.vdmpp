@@ -17,7 +17,8 @@ operations
 		description := compDescription;
 		races := {};
 		return self
-	);
+	)
+	post name = compName and description = compDescription and races = {};
 	
 	public getName: () ==> String 
 	getName() == return name
@@ -47,4 +48,3 @@ operations
 	
 
 end Competition
-

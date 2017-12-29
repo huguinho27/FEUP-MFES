@@ -17,8 +17,9 @@ operations
 		fullName := name;
 		birthDay := bday;
 		gender := pilotGender;	
-		return self;
-	);
+		return self
+	)
+	post fullName = name and birthDay = bday and gender = pilotGender;
 	
 	public getName: () ==> String 
 	getName() == return fullName

@@ -20,8 +20,9 @@ operations
 		pilotSet := {};
 		sponsorSet := {};
 		vehicleSet := {};
-		return self;
-	);
+		return self
+	)
+	post name = tName and pilotSet = {} and sponsorSet = {} and vehicleSet = {};
 	
 	public getName: () ==> String
 	getName() == return name

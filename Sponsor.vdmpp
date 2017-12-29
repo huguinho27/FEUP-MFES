@@ -15,7 +15,8 @@ operations
 		name := sponsorName; 
 		description := sponsorDescription;
 		return self
-	);
+	)
+	post name = sponsorName and description = sponsorDescription;
 	
 	public getName: () ==> String
 	getName() == return name

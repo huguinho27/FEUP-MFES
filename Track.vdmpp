@@ -23,7 +23,8 @@ operations
 		trackLocation := location;
 		trackDistance := distance;	
 		return self
-	);
+	) 
+	post trackName = name and trackLocation = location and trackDistance = distance;
 
 	/**
 	 *	getName, returns name.

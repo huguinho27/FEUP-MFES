@@ -15,8 +15,9 @@ operations
 		pilot := pPilot;
 		team := pTeam;
 		vehicle := pVehicle;
-		return self;
-	);
+		return self
+	)
+	post pilot = pPilot and team = pTeam and vehicle = pVehicle;
 	
 	public getPilot: () ==> Pilot
 	getPilot() == return pilot
