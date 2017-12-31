@@ -125,7 +125,7 @@ operations
 		else 
 		(
 			tracks := tracks \ {tempTrack};
-			return tracks;	
+			return true;	
 		);		
 	);
 		
@@ -143,7 +143,7 @@ operations
 	 
 	 */ 
 	 public addRaceToCompetition: String * String * String * RallyUtils`Date ==> ?
-	 addRaceToCompetition(competitionName, raceName, trackName, date) == 
+	 addRaceToCompetition(raceName, competitionName, trackName, date) == 
 	 (
 	 		dcl tempTrack : ? := RallyUtils`checkIfExistsTrack(trackName, tracks);
 	 		dcl tempComp : ? := RallyUtils`checkIfExistsCompetition(competitionName, competitions);	
@@ -157,9 +157,11 @@ operations
 	 		
 	 		if tempTrack = nil
 	 		then return false;
+			track := tempTrack;
 	 		
 	 		if tempComp = nil
 	 		then return false;
+ 			competition  := tempComp;
 	 
 	 		for all competitionLoop in set competitions do
 	 		(
@@ -173,13 +175,13 @@ operations
 	 			) 			
 	 		);
 	 		
+
+	 		
 	 		for all raceCheck in set competition.getRaces() do
 	 		(
 	 				if RallyUtils`equalDate(raceCheck.getDate(), date) then return false;
 	 		);
-	 		
- 			track := tempTrack;
- 			competition  := tempComp;
+ 			
  			
  			race := new Race(raceName, track, date);
  			races := races union {race};
@@ -187,7 +189,7 @@ operations
  			return race;
 	 );
 	 
-	 public deleteRace: String ==> ?
+	 public deleteRace: String ==> bool
 	 deleteRace(raceName) ==
 	 (
 	 		dcl raceTemp: ? := RallyUtils`checkIfExistsRace(raceName, races);
@@ -203,7 +205,7 @@ operations
 	 			competitionLoop.deleteRace(race);		
 	 		);
 	 		
-	 		return race;
+	 		return true;
 	 );
 	 
 	/**

@@ -3,11 +3,6 @@ class TestRally
 
 operations
 
-	protected assertTrue: bool ==> ()
-	assertTrue(arg) == 
-		return 
-	pre arg;
-  
 	protected assertEqual: ? * ? ==> ()
 	assertEqual(expected, actual) == 
 		if expected <> actual then (
@@ -27,6 +22,8 @@ operations
 			IO`print("Rally Test"); 			
 			testClass.testRallyCreation();
 			testClass.testAddAndDeleteCompetition();
+			testClass.testAddAndDeleteTrack();
+			testClass.testAddAndDeleteRace();
 	
 	);
 
@@ -43,14 +40,63 @@ operations
 			dcl rally: Rally := new Rally();
 		
 			--testing adding new competition, and adding the same with diferente description
-			assertEqual(isofclass(Competition, rally.addCompetition("wrc", "allu")), true);
+			assertEqual(isofclass(Competition, rally.addCompetition("wrc", "wrc rally")), true);
+			assertEqual(isofclass(Competition, rally.addCompetition("f1", "formula 1")), true);
 			assertEqual(rally.addCompetition("wrc", "comar"), false);
 			
 			--testing delete and delete again
 			assertEqual({} subset rally.deleteCompetition("wrc"), true);
 			assertEqual(rally.deleteCompetition("wrc"), false);
+	);
+	
+	public testAddAndDeleteTrack: () ==> ()
+	testAddAndDeleteTrack() == 
+	(
+			dcl rally: Rally := new Rally();
 			
+			--testing adding track
+			assertEqual(isofclass(Track, rally.addTrack("montecarlo", "italia", 123)), true);
+			assertEqual(isofclass(Track, rally.addTrack("estoril", "algarve", 123)), true);
+			
+			--testing delete and delete again
+			assertEqual(rally.deleteTrack("montecarlo"), true);
+			assertEqual(rally.deleteTrack("montecarlo"), false);
+	);
+	
+	public testAddAndDeleteRace: () ==> ()
+	testAddAndDeleteRace() ==
+	(
+			dcl rally: Rally := new Rally();
 				
+			assertEqual(isofclass(Competition, rally.addCompetition("wrc", "wrc rally")), true);
+			assertEqual(isofclass(Track, rally.addTrack("montecarlo", "italia", 123)), true);
+			
+			--test add non existing values
+			assertEqual(rally.addRaceToCompetition("cabomRace", "cabomCompetition", "cabomTrack", mk_RallyUtils`Date(2017, 12,31)), false);
+			assertEqual(rally.addRaceToCompetition("cabomRace", "wrc", "cabomTrack", mk_RallyUtils`Date(2017, 12,31)), false);
+			assertEqual(rally.addRaceToCompetition("cabomRace", "cabomCompetition", "montecarlo", mk_RallyUtils`Date(2017, 12,31)), false);
+			
+			--real add
+			assertEqual(isofclass(Race, rally.addRaceToCompetition("cabomRace", "wrc", "montecarlo", mk_RallyUtils`Date(2017, 12,31))), true);
+			
+			--already exists test
+			assertEqual(rally.addRaceToCompetition("cabomRace", "wrc", "montecarlo", mk_RallyUtils`Date(2017, 12,31)), false);
+			
+			--test date conflicts
+			assertEqual(rally.addRaceToCompetition("cabomRaceOther", "wrc", "montecarlo", mk_RallyUtils`Date(2017, 12,31)), false);
+			assertEqual(isofclass(Race, rally.addRaceToCompetition("cabomRaceOther", "wrc", "montecarlo", mk_RallyUtils`Date(2018,01,01))), true);
+			
+			--test deleteTrack
+			assertEqual(isofclass(Race, rally.deleteTrack("montecarlo")), true);
+			
+			--test deleteRace
+			assertEqual(rally.deleteRace("cabomRaceOther"), true);
+			assertEqual(rally.deleteRace("cabomRace"), true);
+			assertEqual(rally.deleteRace("cabomRace"), false);
+			assertEqual(rally.deleteRace("otherRace"), false);
+			
+			--test deleteTrack again
+			assertEqual(rally.deleteTrack("montecarlo"), true);
 	);
 	
 end TestRally
