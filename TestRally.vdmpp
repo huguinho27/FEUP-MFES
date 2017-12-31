@@ -24,6 +24,9 @@ operations
 			testClass.testAddAndDeleteCompetition();
 			testClass.testAddAndDeleteTrack();
 			testClass.testAddAndDeleteRace();
+			testClass.testAddAndDeletePilot();
+			testClass.testAddAndDeleteVehicle();
+			testClass.testAddAndDeleteSponsor()
 	
 	);
 
@@ -98,5 +101,57 @@ operations
 			--test deleteTrack again
 			assertEqual(rally.deleteTrack("montecarlo"), true);
 	);
+	
+	public testAddAndDeletePilot: () ==> ()
+	testAddAndDeletePilot() == 
+	(
+			dcl rally: Rally := new Rally();
+		
+			--testing adding new pilot, adding the same with diferent values, and adding other
+			assertEqual(isofclass(Pilot, rally.addPilot("Miguel Alves", mk_RallyUtils`Date(1996, 12,31), <Male>)), true);
+			assertEqual(rally.addPilot("Miguel Alves", mk_RallyUtils`Date(1996, 11,30), <Female>), false);
+			assertEqual(isofclass(Pilot, rally.addPilot("Mariana Figueiredo", mk_RallyUtils`Date(1996, 02,28), <Female>)), true);
+			
+			--deleting pilots
+			assertEqual(rally.deletePilot("Miguel Alves"), true);
+			assertEqual(rally.deletePilot("Mariana Figueiredo"), true);
+			assertEqual(rally.deletePilot("Miguel Alves"), false);
+			assertEqual(rally.deletePilot("Mariana Figueiredo"), false);
+	);
+	
+	public testAddAndDeleteVehicle: () ==> ()
+	testAddAndDeleteVehicle() == 
+	(
+			dcl rally: Rally := new Rally();
+			
+			--testing adding new vehicle, adding the same with diferent values, and adding other
+			assertEqual(isofclass(Vehicle, rally.addVehicle("carrao", "bmw", "gtx", "tr-23-23")), true);
+			assertEqual(rally.addVehicle("carrao", "porsche", "911", "tu-12-13"), false);
+			assertEqual(isofclass(Vehicle, rally.addVehicle("espetaculo", "bmw", "gtx", "tr-23-42")), true);
+			
+			--deleting pilots
+			assertEqual(rally.deleteVehicle("carrao"), true);
+			assertEqual(rally.deleteVehicle("espetaculo"), true);
+			assertEqual(rally.deleteVehicle("carrao"), false);
+			assertEqual(rally.deleteVehicle("espetaculo"), false);
+	);
+	
+	public testAddAndDeleteSponsor: () ==> ()
+	testAddAndDeleteSponsor() ==
+	(
+			dcl rally: Rally := new Rally();
+	
+			--testing adding new sponsor, adding the same with diferent values, and adding other
+			assertEqual(isofclass(Sponsor, rally.addSponsor("michellin", "pneus e tal..")), true);
+			assertEqual(rally.addSponsor("michellin", "pneus e tal.. e mais umas"), false);
+			assertEqual(isofclass(Sponsor, rally.addSponsor("continental", "mais pneus e tal..")), true);
+			
+			--deleting pilots
+			assertEqual(rally.deleteSponsor("michellin"), true);
+			assertEqual(rally.deleteSponsor("continental"), true);
+			assertEqual(rally.deleteSponsor("michellin"), false);
+			assertEqual(rally.deleteSponsor("continental"), false);
+	);
+	
 	
 end TestRally
