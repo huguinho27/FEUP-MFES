@@ -1,0 +1,56 @@
+class TestRally
+/* Class from the example */
+
+operations
+
+	protected assertTrue: bool ==> ()
+	assertTrue(arg) == 
+		return 
+	pre arg;
+  
+	protected assertEqual: ? * ? ==> ()
+	assertEqual(expected, actual) == 
+		if expected <> actual then (
+  			IO`print("Actual value (");
+  			IO`print(actual); 
+  			IO`print(") different from expected (");
+  			IO`print(expected);
+  			IO`println(")\n")
+		)
+	post expected = actual;
+	
+	
+	public static main: () ==> ()
+	main() == 
+	(
+			dcl testClass : TestRally := new TestRally();
+			IO`print("Rally Test"); 			
+			testClass.testRallyCreation();
+			testClass.testAddAndDeleteCompetition();
+	
+	);
+
+	public testRallyCreation: () ==> ()
+	testRallyCreation() == 
+	(
+			dcl rally: Rally := new Rally();
+			assertEqual(isofclass(Rally, rally), true);	
+	);
+	
+	public testAddAndDeleteCompetition: () ==> ()
+	testAddAndDeleteCompetition() == 
+	(
+			dcl rally: Rally := new Rally();
+		
+			--testing adding new competition, and adding the same with diferente description
+			assertEqual(isofclass(Competition, rally.addCompetition("wrc", "allu")), true);
+			assertEqual(rally.addCompetition("wrc", "comar"), false);
+			
+			--testing delete and delete again
+			assertEqual({} subset rally.deleteCompetition("wrc"), true);
+			assertEqual(rally.deleteCompetition("wrc"), false);
+			
+				
+	);
+	
+end TestRally
