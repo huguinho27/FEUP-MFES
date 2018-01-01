@@ -71,7 +71,6 @@ operations
 	 */
 	public deletePilot: Pilot ==> ()
 	deletePilot(newPilot) == pilotSet := pilotSet \ {newPilot}
-	pre newPilot in set pilotSet
 	post newPilot not in set pilotSet;
 	
 	/**
@@ -79,7 +78,6 @@ operations
 	 */
 	public addSponsor: Sponsor ==> ()
 	addSponsor(newSponsor) == sponsorSet := sponsorSet union {newSponsor}
-	pre newSponsor not in set sponsorSet
 	post newSponsor in set sponsorSet;
 	
 	/**
@@ -87,7 +85,6 @@ operations
 	 */
 	public deleteSponsor: Sponsor ==> ()
 	deleteSponsor(newSponsor) == sponsorSet := sponsorSet \ {newSponsor}
-	pre newSponsor in set sponsorSet
 	post newSponsor not in set sponsorSet;
 	
 	/**
@@ -95,7 +92,6 @@ operations
 	 */
 	public addVehicle: Vehicle ==> ()
 	addVehicle(newVehicle) == vehicleSet := vehicleSet union {newVehicle}
-	pre newVehicle not in set vehicleSet
 	post newVehicle in set vehicleSet;
 	
 	/**
@@ -103,7 +99,6 @@ operations
 	 */
 	public deleteVehicle: Vehicle ==> ()
 	deleteVehicle(newVehicle) == vehicleSet := vehicleSet \ {newVehicle}
-	pre newVehicle in set vehicleSet
 	post newVehicle not in set vehicleSet;
 
 end Team

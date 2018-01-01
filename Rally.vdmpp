@@ -168,11 +168,7 @@ operations
 	 		for all competitionLoop in set competitions do
 	 		(
 	 			for all raceLoop in set competitionLoop.getRaces() do
-	 			(
-	 				--already checked above, to delete
-	 				if RallyUtils`equalString(raceLoop.getName(), raceName) 
-	 				then return false;
-	 				
+	 			(	 				
 	 				if RallyUtils`equalString(raceLoop.getTrack().getName(), trackName) and RallyUtils`equalDate(raceLoop.getDate(), date)
 	 				then return false;
 	 			) 			
@@ -559,13 +555,6 @@ operations
   				);
   		);
   		
-  		--probablly to delete
-  		for all participantLoop in set dom race.getResults() do
-  		(
-  				if RallyUtils`equalString(pilot.getName(), participantLoop.getPilot().getName()) then return false;
-  				if RallyUtils`equalString(vehicle.getName(), participantLoop.getVehicle().getName()) then return false;
-  		
-  		);
   		
   		if not pilot in set team.getPilots() then return false;
   		if not vehicle in set team.getVehicles() then return false;
