@@ -388,6 +388,11 @@ operations
 			assertEqual(rally.deletePilotParticipantFromRace("Michaella", "race1"), false);
 			assertEqual(rally.deletePilotParticipantFromRace("Miguel Alves", "race1"), true);
 			
+			--testing listing
+			rally.listResults("eventName");
+			rally.listCalendar();
+			rally.listApplication();
+			
 	);
 	
 	
