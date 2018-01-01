@@ -17,7 +17,7 @@ instance variables
 operations
 
 	/**
-	 * ResultPoints constructor, receives points and sets the currPoints, returns self.
+	 * ResultPoints constructor, receives points and sets the current Points.
 	 */	
 	public ResultPoints: nat ==> ResultPoints
 	ResultPoints(points) == (currPoints := points; return self)
@@ -31,17 +31,10 @@ operations
 	post RESULT = currPoints;
 
 	/**
-	 * addPoints funtion, adds more Points to the current Points, returns self.
+	 * addPoints funtion, adds more Points to the current Points.
 	 */	
 	public addPoints: nat ==> ResultPoints
 	addPoints(morePoints) == (currPoints := currPoints + morePoints; return self);
-
-	/**
-	 * editPoints function, edits the currentPoints, return self.
-	 */	
-	public editPoints: nat ==> ResultPoints
-	editPoints(newPoints) == (currPoints := newPoints; return self)
-	post currPoints = newPoints;
 
 end ResultPoints
 
@@ -58,24 +51,18 @@ instance variables
 operations
 
 	/**
-	 * ResultTime constructor, receives time and sets the currTime, returns self.
+	 * ResultTime constructor, sets the current Time.
 	 */	
 	public ResultTime: real ==> ResultTime
 	ResultTime(time) == (currTime := time; return self)
 	post currTime = time;
 	
 	/**
-	 * getTime, returns the currTime.
+	 * getTime, returns the current Time.
 	 */		
 	public getTime: () ==> real
 	getTime() == return currTime
 	post RESULT = currTime;
 	
-	/**
-	 * editTime function, receives new time and updates the currTime, returns self.
-	 */	
-	public editTime: nat ==> ResultTime
-	editTime(newTime) == (currTime := newTime; return self)
-	post currTime = newTime;
 
 end ResultTime

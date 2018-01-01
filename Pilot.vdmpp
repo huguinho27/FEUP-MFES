@@ -1,3 +1,6 @@
+/**
+ *	Pilot Class. Reprents a human Pilot.
+ */
 class Pilot
 
 types
@@ -11,6 +14,9 @@ instance variables
 
 operations
 	
+	/**
+   *	Pilot Constructor, sets name, birthday and gender.
+ 	 */
 	public Pilot: String * RallyUtils`Date * Gender ==> Pilot
 	Pilot(name, bday, pilotGender) == 
 	(
@@ -21,14 +27,23 @@ operations
 	)
 	post fullName = name and birthDay = bday and gender = pilotGender;
 	
+	/**
+   *	getName, returns name.
+ 	 */
 	public getName: () ==> String 
 	getName() == return fullName
 	post RESULT = fullName;
 	
+	/**
+   *	getBirthday, returns birthday.
+ 	 */
 	public getBirthday: () ==> RallyUtils`Date 
 	getBirthday() == return birthDay
 	post RESULT = birthDay;
 	
+	/**
+   *	getGender, returns gender.
+ 	 */
 	public getGender: () ==> Gender
 	getGender() == return gender
 	post RESULT = gender;

@@ -1,5 +1,5 @@
 /**
- * Race Class
+ * Race Class, represents a event race from a event competition.
  */
 class Race
 
@@ -15,7 +15,7 @@ instance variables
 	
 operations
 	/**
-	 * Race Constructor, sets name, track, date and results map. Returns self.
+	 * Race Constructor, sets name, track and date. starts results map empty.
 	 */
 	public Race: String * Track * RallyUtils`Date ==> Race
 	Race(raceName, raceTrack, raceDateIN) ==
@@ -28,28 +28,46 @@ operations
 	)
 	post name = raceName and track = raceTrack and date = raceDateIN and results = {|->};
 
+	/**
+   *	getTrack, returns track.
+ 	 */
 	public getTrack: () ==> Track
 	getTrack() == return track
 	post RESULT = track;
 
+	/**
+   *	getName, returns name.
+ 	 */
 	public getName: () ==> String
 	getName() == return name
 	post RESULT = name;
 	
+	/**
+   *	getDate, returns date.
+ 	 */
 	public getDate: () ==> RallyUtils`Date
 	getDate() == return date
 	post RESULT = date;
 	
+	/**
+   *	getResults, returns results map.
+ 	 */
 	public getResults: () ==> map Participant to ResultTime
 	getResults() == return results
 	post RESULT = results;
 	
+	/**
+   *	addResult, maps new key and value, participant and result, to the results map.
+ 	 */
 	public addResult: Participant * ResultTime ==> ()
 	addResult(participant, result) ==
 	(
 			results := results munion {participant |-> result};
 	);
 	
+	/**
+   *	deleteResult, deletes a maped key and value from the results map.
+ 	 */
 	public deleteResult: Participant  ==> ()
 	deleteResult(participant) == 
 	(

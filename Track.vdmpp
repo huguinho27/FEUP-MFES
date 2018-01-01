@@ -1,5 +1,5 @@
 /**
- *	Track Class
+ *	Track Class, to represent a real Track
  */
 class Track
 
@@ -14,7 +14,7 @@ instance variables
 operations
 
 	/**
-	 * Track constructor, set name, location and distance. Return self.
+	 * Track constructor, set name, location and distance.
 	 */	
 	public Track: String * String * real ==> Track
 	Track(name, location, distance) == 
@@ -46,13 +46,5 @@ operations
 	 public getDistance: () ==> real
 	 getDistance() == return trackDistance
 	 post RESULT = trackDistance;
-	 
-	 public editLocation: String ==> ()
-	 editLocation(newLocation) == trackLocation := newLocation
-	 post trackLocation = newLocation;
-	 
-	 public editDistance: real ==> ()
-	 editDistance(newDistance) == trackDistance := newDistance
-	 post trackDistance = newDistance;
 
 end Track

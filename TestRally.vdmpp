@@ -1,8 +1,13 @@
+/** 
+ * TestRally, Test class from the exapmle.
+ */
 class TestRally
-/* Class from the example */
 
 operations
 
+	/** 
+	 * assertEqual, test expected vs. actual value.
+	 */
 	protected assertEqual: ? * ? ==> ()
 	assertEqual(expected, actual) == 
 		if expected <> actual then (
@@ -14,7 +19,9 @@ operations
 		)
 	post expected = actual;
 	
-	
+	/** 
+	 * main function, runs all the tests.
+	 */
 	public static main: () ==> ()
 	main() == 
 	(
@@ -35,6 +42,9 @@ operations
 	
 	);
 
+	/** 
+	 * testRallyCreation, tests the creation of the application itself.
+	 */
 	public testRallyCreation: () ==> ()
 	testRallyCreation() == 
 	(
@@ -42,6 +52,9 @@ operations
 			assertEqual(isofclass(Rally, rally), true);	
 	);
 	
+	/** 
+	 * testsAddAndDeleteCompetition, tests the creation, insertion and deletion of Competitions.
+	 */
 	public testAddAndDeleteCompetition: () ==> ()
 	testAddAndDeleteCompetition() == 
 	(
@@ -57,6 +70,9 @@ operations
 			assertEqual(rally.deleteCompetition("wrc"), false);
 	);
 	
+	/** 
+	 * testsAddAndDeleteTrack, tests the creation, insertion and deletion of Tracks.
+	 */
 	public testAddAndDeleteTrack: () ==> ()
 	testAddAndDeleteTrack() == 
 	(
@@ -71,6 +87,9 @@ operations
 			assertEqual(rally.deleteTrack("montecarlo"), false);
 	);
 	
+	/** 
+	 * testsAddAndDeleteRace, tests the creation, insertion and deletion of Races.
+	 */
 	public testAddAndDeleteRace: () ==> ()
 	testAddAndDeleteRace() ==
 	(
@@ -107,6 +126,9 @@ operations
 			assertEqual(rally.deleteTrack("montecarlo"), true);
 	);
 	
+	/** 
+	 * testsAddAndDeletePilot, tests the creation, insertion and deletion of Pilots.
+	 */
 	public testAddAndDeletePilot: () ==> ()
 	testAddAndDeletePilot() == 
 	(
@@ -124,6 +146,9 @@ operations
 			assertEqual(rally.deletePilot("Mariana Figueiredo"), false);
 	);
 	
+	/** 
+	 * testsAddAndDeleteVehicle, tests the creation, insertion and deletion of Vehicles.
+	 */
 	public testAddAndDeleteVehicle: () ==> ()
 	testAddAndDeleteVehicle() == 
 	(
@@ -142,6 +167,9 @@ operations
 			assertEqual(rally.deleteVehicle("espetaculo"), false);
 	);
 	
+	/** 
+	 * testsAddAndDeleteSponsor, tests the creation, insertion and deletion of Sponsors.
+	 */
 	public testAddAndDeleteSponsor: () ==> ()
 	testAddAndDeleteSponsor() ==
 	(
@@ -159,6 +187,9 @@ operations
 			assertEqual(rally.deleteSponsor("continental"), false);
 	);
 	
+	/** 
+	 * testsAddAndDeleteTeam, tests the creation, insertion and deletion of Teams.
+	 */
 	public testAddAndDeleteTeam: () ==> ()
 	testAddAndDeleteTeam() ==
 	(
@@ -176,6 +207,9 @@ operations
 			assertEqual(rally.deleteTeam("red bull"), false);
 	);
 	
+	/** 
+	 * testsAddAndDeletePilotInTeam, tests the creation, insertion and deletion of Pilots in Teams.
+	 */
 	public testAddAndDeltePilotInTeam: () ==> ()
 	testAddAndDeltePilotInTeam() ==
 	(
@@ -199,6 +233,9 @@ operations
 			assertEqual(rally.deletePilotFromTeam("Miguel Alves", "ferrari"), true);
 	);
 	
+	/** 
+	 * testsAddAndDeleteSponsorInTeam, tests the creation, insertion and deletion of Sponsors in Teams.
+	 */
 	public testAddAndDeleteSponsorInTeam: () ==> ()
 	testAddAndDeleteSponsorInTeam() ==
 	(
@@ -223,6 +260,9 @@ operations
 
 	);
 	
+	/** 
+	 * testsAddAndDeleteVehicleInTeam, tests the creation, insertion and deletion of Vehicles in Teams.
+	 */
 	public testAddAndDeleteVehicleInTeam: () ==> ()
 	testAddAndDeleteVehicleInTeam() ==
 	(
@@ -246,6 +286,9 @@ operations
 			assertEqual(rally.deleteVehicleFromTeam("carrao", "ferrari"), true);		
 	);
 	
+	/** 
+	 * testsAddAndDeleteParticipantResult, tests the creation, insertion and deletion of Participants and Results.
+	 */
 	public testAddAndDeleteParticipantResult: () ==> ()
 	testAddAndDeleteParticipantResult() ==
 	(
@@ -299,7 +342,7 @@ operations
 			--attempting to delete vehicle, team and pilot
 			assertEqual(rally.deletePilot("Miguel Alves"), false);
 			assertEqual(rally.deleteVehicle("carro1"), false);
-			assertEqual(rally.deletePilot("ferrari"), false);
+			assertEqual(rally.deleteTeam("ferrari"), false);
 			
 			--attempting to delete Results
 			assertEqual(rally.deletePilotParticipantFromRace("Michaella", "race4"), false);

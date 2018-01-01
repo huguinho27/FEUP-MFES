@@ -1,3 +1,6 @@
+/**
+ *	Sponsor class, to represent a Sponsor, sponsoring teams.
+ */
 class Sponsor
 
 types
@@ -9,6 +12,9 @@ instance variables
 	
 operations
 
+	/**
+	 *	Sponsor Constructor, sets Sponsor name and Sponsor description.
+	 */
 	public Sponsor: String * String ==> Sponsor
 	Sponsor(sponsorName, sponsorDescription) == 
 	(
@@ -18,16 +24,18 @@ operations
 	)
 	post name = sponsorName and description = sponsorDescription;
 	
+	/**
+	 *	getName, returns name.
+	 */
 	public getName: () ==> String
 	getName() == return name
 	post RESULT = name;
 	
+	/**
+	 *	getDescription, returns description.
+	 */
 	public getDescription: () ==> String
 	getDescription() == return description
 	post RESULT = description;
 	
-	public editDescription: String ==> ()
-	editDescription(newDescription) == description := newDescription
-	post description = newDescription;
-
 end Sponsor

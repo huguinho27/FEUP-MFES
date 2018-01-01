@@ -1,3 +1,6 @@
+/**
+ *	Team Class, to represent a Team, contains several Pilot, Sponsor and Vehicle.
+ */
 class Team
 
 types
@@ -13,6 +16,10 @@ instance variables
 	private vehicleSet: VehicleSet;
 	
 operations
+
+	/**
+	 *	Team Constructor, sets name, starts set of Pilot, set of Sponsor and set of Vehicle empty.
+	 */
 	public Team: String ==> Team
 	Team(tName) == 
 	(
@@ -24,46 +31,76 @@ operations
 	)
 	post name = tName and pilotSet = {} and sponsorSet = {} and vehicleSet = {};
 	
+	/**
+	 *	getName, returns name.
+	 */
 	public getName: () ==> String
 	getName() == return name
 	post RESULT = name;
 	
+	/**
+	 *	getPilots, returns set of Pilot.
+	 */
 	public getPilots: () ==> PilotSet
 	getPilots() == return pilotSet
 	post RESULT = pilotSet;
 	
-	public getSponsorSet: () ==> SponsorSet
-	getSponsorSet() == return sponsorSet
+	/**
+	 *	getSponsors, returns set of Sponsor.
+	 */
+	public getSponsors: () ==> SponsorSet
+	getSponsors() == return sponsorSet
 	post RESULT = sponsorSet;
 	
+	/**
+	 *	getVehicles, returns set of Vehicle.
+	 */
 	public getVehicles: () ==> VehicleSet
 	getVehicles() == return vehicleSet
 	post RESULT = vehicleSet;
 	
+	/**
+	 *	addPilot, adds a Pilot to the set of Pilot.
+	 */
 	public addPilot: Pilot ==> ()
 	addPilot(newPilot) == pilotSet := pilotSet union {newPilot}
 	post newPilot in set pilotSet;
 	
+	/**
+	 *	deletePilot, deletes a Pilot from the set of Pilot.
+	 */
 	public deletePilot: Pilot ==> ()
 	deletePilot(newPilot) == pilotSet := pilotSet \ {newPilot}
 	pre newPilot in set pilotSet
 	post newPilot not in set pilotSet;
 	
+	/**
+	 *	addSponsor, adds a Sponsor to the set of Sponsor.
+	 */
 	public addSponsor: Sponsor ==> ()
 	addSponsor(newSponsor) == sponsorSet := sponsorSet union {newSponsor}
 	pre newSponsor not in set sponsorSet
 	post newSponsor in set sponsorSet;
 	
+	/**
+	 *	deleteSponsor, deletes a Sponsor from the set of Sponsor.
+	 */
 	public deleteSponsor: Sponsor ==> ()
 	deleteSponsor(newSponsor) == sponsorSet := sponsorSet \ {newSponsor}
 	pre newSponsor in set sponsorSet
 	post newSponsor not in set sponsorSet;
 	
+	/**
+	 *	addVehicle, adds a Vehicle to the set of Vehicle.
+	 */
 	public addVehicle: Vehicle ==> ()
 	addVehicle(newVehicle) == vehicleSet := vehicleSet union {newVehicle}
 	pre newVehicle not in set vehicleSet
 	post newVehicle in set vehicleSet;
 	
+	/**
+	 *	deleteVehicle, deletes a Vehicle from the set of Vehicle.
+	 */
 	public deleteVehicle: Vehicle ==> ()
 	deleteVehicle(newVehicle) == vehicleSet := vehicleSet \ {newVehicle}
 	pre newVehicle in set vehicleSet

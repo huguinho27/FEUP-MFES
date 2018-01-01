@@ -1,7 +1,12 @@
+/**
+ *	RallyUtils, usefull functions and operations for the project.
+ */
 class RallyUtils
 
 types 
 	public String = seq of char;
+	
+	--type date, with invariant restricting a valid date
 	public Date :: year : nat1
 								month: nat1
 								day : nat1
@@ -10,6 +15,9 @@ types
 	
 functions
 
+	/**
+	 *	amountDaysInMonth, returns the total ammount of days in a given month from a given year.
+	 */
 	public amountDaysInMonth(year:nat1, month:nat1) res : nat1 ==
 	(
 		if leapYear(year) and month = 2 then 29
@@ -19,10 +27,16 @@ functions
 	)
 	pre month >= 1 and month <= 12;
 		
+	/**
+	 *	leapYear, checks if a given year is leap or common.
+	 */
 	public static leapYear(year: nat1) res : bool ==
 		year mod 400 = 0 or
 		year mod 4 = 0 and year mod 100 <> 0; 
 		
+	/**
+	 *	equalDate, tests if two dates are equal.
+	 */
 	public static equalDate(date1:Date, date2:Date) res : bool == 
 	(
 		if date1.year <> date2.year then false
@@ -36,6 +50,9 @@ functions
 	
 operations
 
+	/**
+	 *	checkIfExistsCompetition, checks if a Competition already exists in a set of Competition.
+	 */
 	public static checkIfExistsCompetition: String * set of Competition ==> ?
 	checkIfExistsCompetition(name, sequence) == 
 	(
@@ -48,6 +65,10 @@ operations
 		return nil;
 	);
 	
+	
+	/**
+	 *	checkIfExistsTrack, checks if a given Track exists in a set of Track.
+	 */
 	public static checkIfExistsTrack: String * set of Track ==> ?
 	checkIfExistsTrack(name, sequence) ==
 	(
@@ -59,6 +80,9 @@ operations
 		return nil;
 	);
 	
+	/**
+	 *	checkIfExistsRace, checks if a given Race exists in a set of Race.
+	 */
 	public static checkIfExistsRace: String * set of Race ==> ?
 	checkIfExistsRace(name, sequence) ==
 	(
@@ -70,6 +94,9 @@ operations
 		return nil;
 	);
 	
+	/**
+	 *	checkIfExistsPilot, checks if a given Pilot exists in a set of Pilot.
+	 */
 	public static checkIfExistsPilot: String * set of Pilot ==> ?
 	checkIfExistsPilot(name, sequence) ==
 	(
@@ -81,6 +108,9 @@ operations
 		return nil;
 	);
 	
+	/**
+	 *	checkIfExistsTeam, checks if a given Team exists in a set of Team.
+	 */
 	public static checkIfExistsTeam: String * set of Team ==> ?
 	checkIfExistsTeam(name, sequence) ==
 	(
@@ -92,6 +122,9 @@ operations
 		return nil;
 	);
 	
+	/**
+	 *	checkIfExistsSponsor, checks if a given Sponsor exists in a set of Sponsor.
+	 */
 	public static checkIfExistsSponsor: String * set of Sponsor ==> ?
 	checkIfExistsSponsor(name, sequence) ==
 	(
@@ -103,6 +136,9 @@ operations
 		return nil;
 	);
 	
+	/**
+	 *	checkIfExistsVehicle, checks if a given Vehicle exists in a set of Vehicle.
+	 */
 	public static checkIfExistsVehicle: String * set of Vehicle ==> ?
 	checkIfExistsVehicle(name, sequence) ==
 	(
@@ -114,6 +150,9 @@ operations
 		return nil;
 	);
 	
+	/**
+	 *	checkIfExistsParticipant, checks if a given Participant exists in a set of Participant.
+	 */
 	public static checkIfExistsParticipant: String * set of Participant ==> ?
 	checkIfExistsParticipant(name, sequence) ==
 	(
@@ -125,6 +164,9 @@ operations
 		return nil;
 	);
 	
+	/**
+	 *	checkIfExistsTrackInRace, checks if a given Track exists in a Race, from a set of Race.
+	 */
 	public static checkIfExistsTrackInRace: String * set of Race ==> ?
 	checkIfExistsTrackInRace(name, sequence) == 
 	(
@@ -138,6 +180,9 @@ operations
 		return nil;
 	);
 	
+	/**
+	 *	equalString, checks if two String are equal.
+	 */
 	public static equalString: String * String ==> bool
 	equalString(name, compName) == 
 	(

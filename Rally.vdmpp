@@ -29,7 +29,7 @@ instance variables
 	
 operations
 	/**
-	 * Rally constructor, creates empty set of Competitions and tracks. returns self.
+	 * Rally constructor, creates empty set of Competition, Track, Race, Pilot, Team, Participant, Vehicle and Sponsor.
 	 */
 	public Rally: () ==> Rally
 	Rally() == 
@@ -50,9 +50,9 @@ operations
 	 * COMPETITION SCOPE
 	 */
 	/**
-	 * Rally addCompetition, creates new Competion with a name (identifier) and a season
+	 * addCompetition, Rally addCompetition, creates new Competion with a name (identifier) and a season
 	 * adds the Competition to the set of Competitions and returns that set.
-	 * cannot create competition if exists already
+	 * cannot create competition if exists already.
 	 */
 	public addCompetition: String * String ==> ?
 	addCompetition(newCompName, newCompDescription) == 
@@ -69,7 +69,7 @@ operations
 
 	
 	/**
-	 * Rally delete Competition, searchs for the competition name (identifier) and deletes the 
+	 * deleteCompetition, Rally delete Competition, searchs for the competition name (identifier) and deletes the 
 	 * competition from the set. Returns the set of Competitions, or false.
 	 */	
 	public deleteCompetition: String ==> ?
@@ -109,7 +109,10 @@ operations
 		return false
 	);
 
-	
+	/**
+	 * deleteTrack, deletes a track from the set of track.
+	 * cannot delete if does not exist or if it is bound to a Race.
+	 */
 	public deleteTrack: String ==> ?
 	deleteTrack(name) ==
 	(
@@ -134,13 +137,12 @@ operations
 	 * RACE SCOPE
 	 */
 	/**
-	 *	addRaceToCompetition
-	   --the competition must exist
-	   --the race must not exist 
-	   --the track must exist
-	   --the competition can only have one race in one day
-	   --the date must be valid and not exist a race in the same track in the same day
-	 
+	 *	addRaceToCompetition, adds a race to a competition according to the following requierments:
+	 *  -the competition must exist
+	 *  -the race must not exist 
+	 *  -the track must exist
+	 *  -the competition can only have one race in one day
+	 *  -the date must be valid and not exist a race in the same track in the same day
 	 */ 
 	 public addRaceToCompetition: String * String * String * RallyUtils`Date ==> ?
 	 addRaceToCompetition(raceName, competitionName, trackName, date) == 
@@ -175,9 +177,7 @@ operations
 	 				then return false;
 	 			) 			
 	 		);
-	 		
-
-	 		
+	 			 		
 	 		for all raceCheck in set competition.getRaces() do
 	 		(
 	 				if RallyUtils`equalDate(raceCheck.getDate(), date) then return false;
@@ -190,6 +190,10 @@ operations
  			return race;
 	 );
 	 
+	 /**
+	  * deleteRace, deletes a race from the set of races and from all the competitions which this race is bound.
+	  * cannot delete if does not exist.
+	  */
 	 public deleteRace: String ==> bool
 	 deleteRace(raceName) ==
 	 (
@@ -212,6 +216,10 @@ operations
 	/**
 	 * PILOT SCOPE
 	 */
+	/**
+	 * addPilot, adds a Pilot to the set of pilots.
+	 * cannot add if already exists.
+	 */
 	public addPilot: String * RallyUtils`Date * Pilot`Gender ==> ?
 	addPilot(name, bday, gender) ==
 	(
@@ -226,8 +234,8 @@ operations
 		);
 	);
 	/**
-	 *
-	 -- verify if no participant has it
+	 * deletePilot, deletes a Pilot from the set of pilots and from the set of pilots bound to a team.
+	 * cannot delete if does not exist or if it is bound to a participant result.
 	 */
 	public deletePilot: String ==> bool
 	deletePilot(name) == 
@@ -258,6 +266,10 @@ operations
  	/**
 	 * VEHICLE SCOPE
 	 */
+	/**
+	 * addVehicle, adds a Vehicle to the set of vehicles.
+	 * cannot add if already exists.
+	 */
 	public addVehicle: String * String * String * String ==> ?
 	addVehicle(name, brand, model, plate) ==
 	(
@@ -271,9 +283,10 @@ operations
 			return vehicle;
 		);
 	);
+	
 	/**
-	 *
-	 -- verify if no participant has it
+	 * deleteVehicle, deletes a Vehicle from the set of vehicles and from the set of vehicles bound to a team.
+	 * cannot delete if does not exist or if it is bound to a participant result.
 	 */
 	public deleteVehicle: String ==> bool
 	deleteVehicle(name) == 
@@ -303,6 +316,10 @@ operations
 	/**
 	 *	SPONSOR SCOPE
 	 */
+	/**
+	 * addSponsor, adds a Sponsor to the set of sponsors.
+	 * cannot add if already exists.
+	 */
 	public addSponsor: String * String ==> ?
 	addSponsor(name, desc) == 
 	(
@@ -316,6 +333,10 @@ operations
 			)
 	);
 	
+	/**
+	 * deleteSponsor, deletes a Sponsor from the set of sponsor and from the set of sponsors bound to a team.
+	 * cannot delete if does not exist.
+	 */
 	public deleteSponsor: String ==> bool
 	deleteSponsor(name) == 
 	(
@@ -338,7 +359,10 @@ operations
 	/**
 	 *	TEAM SCOPE
 	 */
-	 
+	/**
+	 * addTeam, adds a Team to the set of teams.
+	 * cannot add if already exists.
+	 */
 	public addTeam: String ==> ?
 	addTeam(teamName) ==
 	(
@@ -352,6 +376,10 @@ operations
 			);
 	);
 	
+	/**
+	 * deleteTeam, deletes a Team from the set of teams.
+	 * cannot delete if does not exist or if it is bound to a participant result.
+	 */
 	public deleteTeam: String ==> bool
 	deleteTeam(teamName) == 
 	(
@@ -368,7 +396,11 @@ operations
 			teams := teams \ {team};
 			return true;
 	);
-	 
+	
+	/**
+	 * addPilotToTeam, adds a Pilot to a Team.
+	 * only if both pilot and team exist.
+	 */
 	public addPilotToTeam: String * String ==> bool
 	addPilotToTeam(pilotName, teamName) == 
 	(
@@ -385,6 +417,10 @@ operations
 		return true;
 	);
 	
+	/**
+	 * deletePilotFromTeam, deletes a Pilot from a Team.
+	 * only if both pilot and team exist.
+	 */
 	public deletePilotFromTeam: String * String ==> bool
 	deletePilotFromTeam(pilotName, teamName) == 
 	(
@@ -401,6 +437,10 @@ operations
 		return true;
 	);
 	
+	/**
+	 * addSponsorToTeam, adds a Sponsor to a Team.
+	 * only if both sponsor and team exist.
+	 */
 	public addSponsorToTeam: String * String ==> bool
 	addSponsorToTeam(sponsorName, teamName) == 
 	(
@@ -416,7 +456,11 @@ operations
 		team.addSponsor(sponsor);
 		return true;
 	);
-	
+
+	/**
+	 * deleteSponsorFromTeam, deletes a Pilot from a Team.
+	 * only if both sponsor and team exist.
+	 */	
 	public deleteSponsorFromTeam: String * String ==> bool
 	deleteSponsorFromTeam(sponsorName, teamName) == 
 	(
@@ -433,6 +477,10 @@ operations
 		return true;
 	);
 	
+	/**
+	 * addVehicleToTeam, adds a Vehicle to a Team.
+	 * only if both vehicle and team exist.
+	 */
 	public addVehicleToTeam: String * String ==> bool
 	addVehicleToTeam(vehicleName, teamName) == 
 	(
@@ -449,6 +497,10 @@ operations
 		return true;
 	);
 	
+	/**
+	 * deleteVehicleFromTeam, deletes a Vehicle from a Team.
+	 * only if both vehicle and team exist.
+	 */
 	public deleteVehicleFromTeam: String * String ==> bool
 	deleteVehicleFromTeam(vehicleName, teamName) == 
 	(
@@ -469,12 +521,11 @@ operations
 	 *	PARTICIPANT SCOPE
 	 */
  /**
-  *	setParticipantResultInRace
-  --verify if pilot is not running in the same day
-  --verify if vehicle is not running in the same day
-  --verify if the car and the pilot belongs in the team
-  --the pilot and the vehicle cannot run in the same race (already verified in restriction above)
-  --
+  *	setParticipantResultInRace, sets a new map key value, participant -> result, to a race, only if the following requierments are followed:
+  * -verify if pilot is not running in the same day
+  * -verify if vehicle is not running in the same day
+  * -verify if the car and the pilot belongs in the team
+  * -the pilot and the vehicle cannot run in the same race (already verified in restriction above)
   */
   public setParticipantResultInRace: String * String * String * String  * real ==> bool
   setParticipantResultInRace(raceName, pilotName, vehicleName, teamName, resultTime) == 
@@ -529,6 +580,10 @@ operations
   		return true;
   );
   
+	/**
+	 * deletes a map key value, participant and result, from a race,
+	 * only if that corresponding pilot, race, participant and result exist.
+	 */
   public deletePilotParticipantFromRace: String * String ==> bool
   deletePilotParticipantFromRace(pilotName, raceName) == 
   (
@@ -552,18 +607,29 @@ operations
   		return true;
   );
   
+	/**
+	 * listResults, lists a ordered Table of results from a event, either a Competition or a Race.
+	 * searches for Competitions first.
+	 */
   public listResults: String ==> ()
   listResults(eventName) ==
   (
+  		IO`print(eventName);
   		skip;
   );
   
+	/**
+	 * listApplication, lists the whole Rally Application.
+	 */
   public listApplication: () ==> ()
   listApplication() ==
   (
   		skip;
   );
   
+	/**
+	 * listCalendar, lists a ordered table of the next scheduled matches.
+	 */
   public listCalendar: () ==> ()
   listCalendar() ==
   (

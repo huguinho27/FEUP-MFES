@@ -1,3 +1,6 @@
+/**
+ *	Participant Class. Represents a participant in a race. Is a triple of pilot, team and vehicle.
+ */
 class Participant
 
 types
@@ -9,6 +12,10 @@ instance variables
 	public vehicle: Vehicle;
 	
 operations
+
+	/**
+   *	Participant Constructor, sets pilot, team and vehicle.
+ 	 */
 	public Participant: Pilot * Team * Vehicle ==> Participant
 	Participant(pPilot, pTeam, pVehicle) == 
 	(
@@ -19,14 +26,23 @@ operations
 	)
 	post pilot = pPilot and team = pTeam and vehicle = pVehicle;
 	
+	/**
+   *	getPilot, returns pilot.
+ 	 */
 	public getPilot: () ==> Pilot
 	getPilot() == return pilot
 	post RESULT = pilot;
 	
+	/**
+   *	getTeam, retuns team.
+ 	 */
 	public getTeam: () ==> Team
 	getTeam() == return team
 	post RESULT = team;
 	
+	/**
+   *	getVehicle, returns vehicle.
+ 	 */
 	public getVehicle: () ==> Vehicle
 	getVehicle() == return vehicle
 	post RESULT = vehicle;

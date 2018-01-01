@@ -1,3 +1,6 @@
+/** 
+ * Vehicle Class, to Represent a real Vehicle.
+ */
 class Vehicle
 
 types
@@ -10,6 +13,10 @@ instance variables
 	public plate:  String;
 	
 operations
+
+	/** 
+	 * Vehicle Constructor, sets name, brand, model and plate.
+	 */
 	public Vehicle: String * String * String * String ==> Vehicle
 	Vehicle(vehicleName, vehicleBrand, vehicleModel, vehiclePlate) == 
 	(
@@ -21,18 +28,30 @@ operations
 	)
 	post name = vehicleName and brand = vehicleBrand and model = vehicleModel and plate = vehiclePlate;
 	
+	/** 
+	 * getName, returns name.
+	 */
 	public getName: () ==> String 
 	getName() == return name
 	post RESULT = name;
 	
+	/** 
+	 * getBrand, returns brand.
+	 */
 	public getBrand: () ==> String 
 	getBrand() == return brand
 	post RESULT = brand;
 	
+	/** 
+	 * getModel, returns model.
+	 */
 	public getModel: () ==> String 
 	getModel() == return model
 	post RESULT = model;
 	
+	/** 
+	 * getPlate, returns plate.
+	 */
 	public getPlate: () ==> String 
 	getPlate() == return plate
 	post RESULT = plate;

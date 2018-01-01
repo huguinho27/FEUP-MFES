@@ -1,3 +1,6 @@
+/**
+ *	Class Competition. Defines an event Competition.
+ */
 class Competition
 
 types
@@ -10,6 +13,10 @@ instance variables
 	private races: RaceSet;
 	
 operations
+
+	/**
+ 	 *	Constructor. Sets name, description. Starts empty races set.
+ 	 */
 	public Competition: String * String ==> Competition
 	Competition(compName, compDescription) == 
 	(
@@ -20,27 +27,38 @@ operations
 	)
 	post name = compName and description = compDescription and races = {};
 	
+	/**
+   *	getName, returns name.
+ 	 */
 	public getName: () ==> String 
 	getName() == return name
 	post RESULT = name;
-	
+
+	/**
+   *	getDescription, returns description.
+ 	 */
 	public getDescription: () ==> String
 	getDescription() == return description
 	post RESULT = description;
-	
+
+	/**
+   *	getRaces, returns races set.
+ 	 */
 	public getRaces: () ==> RaceSet
 	getRaces() == return races
 	post RESULT = races;
 	
-	public editDescription: String ==> ()
-	editDescription(newDescription) == description := newDescription
-	post description = newDescription;
-	
+	/**
+   *	addRace, adds a race to the set of races.
+ 	 */	
 	public addRace: Race ==> ()
 	addRace(race) == races := races union {race}
 	pre race not in set races
 	post race in set races;
-	
+
+	/**
+   *	deleteRace, deletes a race from the set of races.
+ 	 */
 	public deleteRace: Race ==> ()
 	deleteRace(race) == races := races \ {race}
 	pre race in set races
