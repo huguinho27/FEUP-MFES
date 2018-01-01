@@ -26,7 +26,11 @@ operations
 			testClass.testAddAndDeleteRace();
 			testClass.testAddAndDeletePilot();
 			testClass.testAddAndDeleteVehicle();
-			testClass.testAddAndDeleteSponsor()
+			testClass.testAddAndDeleteSponsor();
+			testClass.testAddAndDeleteTeam();
+			testClass.testAddAndDeltePilotInTeam();
+			testClass.testAddAndDeleteSponsorInTeam();
+			testClass.testAddAndDeleteVehicleInTeam();
 	
 	);
 
@@ -129,6 +133,7 @@ operations
 			assertEqual(rally.addVehicle("carrao", "porsche", "911", "tu-12-13"), false);
 			assertEqual(isofclass(Vehicle, rally.addVehicle("espetaculo", "bmw", "gtx", "tr-23-42")), true);
 			
+		
 			--deleting pilots
 			assertEqual(rally.deleteVehicle("carrao"), true);
 			assertEqual(rally.deleteVehicle("espetaculo"), true);
@@ -151,6 +156,93 @@ operations
 			assertEqual(rally.deleteSponsor("continental"), true);
 			assertEqual(rally.deleteSponsor("michellin"), false);
 			assertEqual(rally.deleteSponsor("continental"), false);
+	);
+	
+	public testAddAndDeleteTeam: () ==> ()
+	testAddAndDeleteTeam() ==
+	(
+			dcl rally: Rally := new Rally();
+	
+			--testing adding new sponsor, adding the same with diferent values, and adding other
+			assertEqual(isofclass(Team, rally.addTeam("ferrari")), true);
+			assertEqual(rally.addTeam("ferrari"), false);
+			assertEqual(isofclass(Team, rally.addTeam("red bull")), true);
+			
+			--deleting Teams
+			assertEqual(rally.deleteTeam("ferrari"), true);
+			assertEqual(rally.deleteTeam("red bull"), true);
+			assertEqual(rally.deleteTeam("ferrari"), false);
+			assertEqual(rally.deleteTeam("red bull"), false);
+	);
+	
+	public testAddAndDeltePilotInTeam: () ==> ()
+	testAddAndDeltePilotInTeam() ==
+	(
+			dcl rally: Rally := new Rally();
+				
+			--add team and pilot
+			assertEqual(isofclass(Pilot, rally.addPilot("Miguel Alves", mk_RallyUtils`Date(1996, 12,31), <Male>)), true);
+			assertEqual(isofclass(Team, rally.addTeam("ferrari")), true);
+			
+			--testar nao existentes
+			assertEqual(rally.addPilotToTeam("ferreira", "red bull"), false);
+			assertEqual(rally.addPilotToTeam("Miguel Alves", "red bull"), false);
+			assertEqual(rally.addPilotToTeam("ferreira", "ferrari"), false);
+			
+			--testar adicionar
+			assertEqual(rally.addPilotToTeam("Miguel Alves", "ferrari"), true);
+			
+			--testar delete
+			assertEqual(rally.deletePilotFromTeam("Miguel Alves", "red bull"), false);
+			assertEqual(rally.deletePilotFromTeam("ferreira", "ferrari"), false);
+			assertEqual(rally.deletePilotFromTeam("Miguel Alves", "ferrari"), true);
+	);
+	
+	public testAddAndDeleteSponsorInTeam: () ==> ()
+	testAddAndDeleteSponsorInTeam() ==
+	(
+			dcl rally: Rally := new Rally();
+	
+			--add team and sponsor
+			assertEqual(isofclass(Sponsor, rally.addSponsor("Michellin", "fazem pneus")), true);
+			assertEqual(isofclass(Team, rally.addTeam("ferrari")), true);
+			
+			--testar nao existentes
+			assertEqual(rally.addSponsorToTeam("continental", "red bull"), false);
+			assertEqual(rally.addSponsorToTeam("Michellin", "red bull"), false);
+			assertEqual(rally.addSponsorToTeam("continental", "ferrari"), false);
+			
+			--testar adicionar
+			assertEqual(rally.addSponsorToTeam("Michellin", "ferrari"), true);
+			
+			--testar delete
+			assertEqual(rally.deleteSponsorFromTeam("Michellin", "red bull"), false);
+			assertEqual(rally.deleteSponsorFromTeam("ferreira", "ferrari"), false);
+			assertEqual(rally.deleteSponsorFromTeam("Michellin", "ferrari"), true);
+
+	);
+	
+	public testAddAndDeleteVehicleInTeam: () ==> ()
+	testAddAndDeleteVehicleInTeam() ==
+	(
+			dcl rally: Rally := new Rally();
+			
+			--add vehicle and team
+			assertEqual(isofclass(Vehicle, rally.addVehicle("carrao", "maclaren", "p8", "ii-99-99")), true);
+			assertEqual(isofclass(Team, rally.addTeam("ferrari")), true);
+			
+			--testar nao existentes
+			assertEqual(rally.addVehicleToTeam("carraozito", "red bull"), false);
+			assertEqual(rally.addVehicleToTeam("carrao", "red bull"), false);
+			assertEqual(rally.addVehicleToTeam("carraozito", "ferrari"), false);
+			
+			--testar adicionar
+			assertEqual(rally.addVehicleToTeam("carrao", "ferrari"), true);
+			
+			--testar delete
+			assertEqual(rally.deleteVehicleFromTeam("carraozito", "red bull"), false);
+			assertEqual(rally.deleteVehicleFromTeam("carrao", "red bull"), false);
+			assertEqual(rally.deleteVehicleFromTeam("carrao", "ferrari"), true);		
 	);
 	
 	
