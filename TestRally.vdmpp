@@ -305,14 +305,7 @@ operations
 			assertEqual(rally.deletePilotParticipantFromRace("Michaella", "race4"), false);
 			assertEqual(rally.deletePilotParticipantFromRace("Miguel Alves", "race4"), false);
 			assertEqual(rally.deletePilotParticipantFromRace("Michaella", "race1"), false);
-			assertEqual(rally.deletePilotParticipantFromRace("Miguel Alves", "race1"), true);
-			
-			
-			
-			
-			
-			
-				
+			assertEqual(rally.deletePilotParticipantFromRace("Miguel Alves", "race1"), true);		
 	);
 	
 	

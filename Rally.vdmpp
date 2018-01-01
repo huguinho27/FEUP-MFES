@@ -552,6 +552,23 @@ operations
   		return true;
   );
   
+  public listResults: String ==> ()
+  listResults(eventName) ==
+  (
+  		skip;
+  );
+  
+  public listApplication: () ==> ()
+  listApplication() ==
+  (
+  		skip;
+  );
+  
+  public listCalendar: () ==> ()
+  listCalendar() ==
+  (
+  		skip;
+	);
   
 	 
 	
