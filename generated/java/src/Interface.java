@@ -44,6 +44,9 @@ public class Interface {
 			case "deleteTrack":
 				deleteTrackHandler(parts);
 				break;
+			case "addRaceToCompetition":
+				addRaceToCompetitionHandler(parts);
+				break;
 			case "deleteRace":
 				deleteRaceHandler(parts);
 				break;
@@ -74,9 +77,187 @@ public class Interface {
 			case "addPilotToTeam":
 				addPilotToTeamHandler(parts);
 				break;
+			case "deletePilotFromTeam":
+				deletePilotFromTeamHandler(parts);
+				break;
+			case "addSponsorToTeam":
+				addSponsorToTeamHandler(parts);
+				break;
+			case "deleteSponsorFromTeam":
+				deleteSponsorFromTeamHandler(parts);
+				break;
+			case "addVehicleToTeam":
+				addVehicleToTeamHandler(parts);
+				break;
+			case "deleteVehicleFromTeam":
+				deleteVehicleFromTeamHandler(parts);
+				break;
+			case "deletePilotParticipantFromRace":
+				deletePilotParticipantFromRaceHandler(parts);
+				break;
+			case "setParticipantResultInRace":
+				setParticipantResultInRaceHandler(parts);
+				break;
+			case "listResults":
+				listResultsHandler(parts);
+				break;
+			case "listApplication":
+				listApplicationHandler(parts);
+				break;
+			case "listCalendar":
+				listCalendarHandler(parts);
+				break;
 			default:
 				cycle("");
 		}
+	}
+	
+	
+	public static void addRaceToCompetitionHandler(String[] message)
+	{
+		if (message.length != 5)
+			cycle("");
+		
+		String racename = separateName(message[1]);
+		String compName = separateName(message[2]);
+		String trackName = separateName(message[3]);
+		
+		String[] bday = message[4].split("-");
+		if (bday.length != 3)
+				cycle("");
+		
+		Object obj = rally.addRaceToCompetition(racename,compName,
+				trackName, new RallyUtils.Date(Long.parseLong(bday[0]), Long.parseLong(bday[1]), 
+						Long.parseLong(bday[2])));
+		System.out.println(obj);
+		cycle("");
+	}
+	
+	public static void listCalendarHandler(String[] message)
+	{
+		if (message.length != 1)
+			cycle("");
+		
+		
+		//TODO: String obj = rally.listCalendar();
+		System.out.println("");
+		cycle("");
+	}
+	
+	public static void listApplicationHandler(String[] message)
+	{
+		if (message.length != 1)
+			cycle("");
+		
+		//TODO: String obj = rally.listApplication();
+		System.out.println("");
+		cycle("");
+	}
+	
+	public static void listResultsHandler(String[] message)
+	{
+		if (message.length != 2)
+			cycle("");
+		
+		String eventname = separateName(message[1]);
+		
+		//TODO: String obj = rally.listResults(eventname);
+		System.out.println("");
+		cycle("");
+	}
+	
+	public static void setParticipantResultInRaceHandler(String[] message)
+	{
+		if (message.length != 6)
+			cycle("");
+		
+		String racename = separateName(message[1]);
+		String pilotName = separateName(message[2]);
+		String vehicleName = separateName(message[3]);
+		String teamName = separateName(message[4]);
+		
+		Object obj = rally.setParticipantResultInRace(racename,pilotName,
+				vehicleName,teamName,Integer.parseInt(message[5]));
+		System.out.println(obj);
+		cycle("");
+	}
+	
+	public static void deletePilotParticipantFromRaceHandler(String[] message)
+	{
+		if (message.length != 3)
+			cycle("");
+		
+		String name = separateName(message[1]);
+		String teamName = separateName(message[2]);
+		
+		Object obj = rally.deletePilotParticipantFromRace(name,teamName);
+		System.out.println(obj);
+		cycle("");
+	}
+	
+	public static void deleteVehicleFromTeamHandler(String[] message)
+	{
+		if (message.length != 3)
+			cycle("");
+		
+		String name = separateName(message[1]);
+		String teamName = separateName(message[2]);
+		
+		Object obj = rally.deleteVehicleFromTeam(name,teamName);
+		System.out.println(obj);
+		cycle("");
+	}
+	
+	public static void addVehicleToTeamHandler(String[] message)
+	{
+		if (message.length != 3)
+			cycle("");
+		
+		String name = separateName(message[1]);
+		String teamName = separateName(message[2]);
+		
+		Object obj = rally.addVehicleToTeam(name,teamName);
+		System.out.println(obj);
+		cycle("");
+	}
+	
+	public static void deleteSponsorFromTeamHandler(String[] message)
+	{
+		if (message.length != 3)
+			cycle("");
+		
+		String name = separateName(message[1]);
+		String teamName = separateName(message[2]);
+		
+		Object obj = rally.deleteSponsorFromTeam(name,teamName);
+		System.out.println(obj);
+		cycle("");
+	}
+	
+	public static void addSponsorToTeamHandler(String[] message)
+	{
+		if (message.length != 3)
+			cycle("");
+		
+		String name = separateName(message[1]);
+		String teamName = separateName(message[2]);
+		
+		Object obj = rally.addSponsorToTeam(name,teamName);
+		System.out.println(obj);
+		cycle("");
+	}
+	
+	public static void deletePilotFromTeamHandler(String[] message)
+	{
+		if (message.length != 3)
+			cycle("");
+		
+		String name = separateName(message[1]);
+		String teamName = separateName(message[2]);
+		
+		Object obj = rally.deletePilotFromTeam(name,teamName);
+		System.out.println(obj);
+		cycle("");
 	}
 	
 	public static void addPilotToTeamHandler(String[] message)
