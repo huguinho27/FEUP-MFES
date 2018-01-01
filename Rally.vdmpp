@@ -220,7 +220,7 @@ operations
 	 * addPilot, adds a Pilot to the set of pilots.
 	 * cannot add if already exists.
 	 */
-	public addPilot: String * RallyUtils`Date * Pilot`genderType ==> ?
+	public addPilot: String * RallyUtils`Date * String ==> ?
 	addPilot(name, bday, gender) ==
 	(
 		if RallyUtils`checkIfExistsPilot(name, pilots) <> nil

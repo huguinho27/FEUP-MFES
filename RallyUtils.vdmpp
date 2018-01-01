@@ -11,8 +11,7 @@ types
 								month: nat1
 								day : nat1
 								inv d == d.month <= 12 and d.month >= 1 and
-								d.day <= amountDaysInMonth(d.year, d.month);
-	
+								d.day <= amountDaysInMonth(d.year, d.month);	
 functions
 
 	/**

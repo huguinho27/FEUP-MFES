@@ -5,19 +5,18 @@ class Pilot
 
 types
 	public String = seq of char;
-	public genderType = <Male> | <Female>;
 	
 instance variables
 	public fullName: String;
 	public birthDay: RallyUtils`Date;
-	public gender: genderType;
+	public gender: String;
 
 operations
 	
 	/**
    *	Pilot Constructor, sets name, birthday and gender.
  	 */
-	public Pilot: String * RallyUtils`Date * genderType ==> Pilot
+	public Pilot: String * RallyUtils`Date * String ==> Pilot
 	Pilot(name, bday, pilotGender) == 
 	(
 		fullName := name;
@@ -44,7 +43,7 @@ operations
 	/**
    *	getGender, returns gender.
  	 */
-	public getGender: () ==> genderType
+	public getGender: () ==> String
 	getGender() == return gender
 	post RESULT = gender;
 	

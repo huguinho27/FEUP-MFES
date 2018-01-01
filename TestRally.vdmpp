@@ -135,9 +135,9 @@ operations
 			dcl rally: Rally := new Rally();
 		
 			--testing adding new pilot, adding the same with diferent values, and adding other
-			assertEqual(isofclass(Pilot, rally.addPilot("Miguel Alves", mk_RallyUtils`Date(1996, 12,31), <Male>)), true);
-			assertEqual(rally.addPilot("Miguel Alves", mk_RallyUtils`Date(1996, 11,30), <Female>), false);
-			assertEqual(isofclass(Pilot, rally.addPilot("Mariana Figueiredo", mk_RallyUtils`Date(1996, 02,28), <Female>)), true);
+			assertEqual(isofclass(Pilot, rally.addPilot("Miguel Alves", mk_RallyUtils`Date(1996, 12,31), "Male")), true);
+			assertEqual(rally.addPilot("Miguel Alves", mk_RallyUtils`Date(1996, 11,30), "Female"), false);
+			assertEqual(isofclass(Pilot, rally.addPilot("Mariana Figueiredo", mk_RallyUtils`Date(1996, 02,28), "Female")), true);
 			
 			--deleting pilots
 			assertEqual(rally.deletePilot("Miguel Alves"), true);
@@ -216,7 +216,7 @@ operations
 			dcl rally: Rally := new Rally();
 				
 			--add team and pilot
-			assertEqual(isofclass(Pilot, rally.addPilot("Miguel Alves", mk_RallyUtils`Date(1996, 12,31), <Male>)), true);
+			assertEqual(isofclass(Pilot, rally.addPilot("Miguel Alves", mk_RallyUtils`Date(1996, 12,31), "Male")), true);
 			assertEqual(isofclass(Team, rally.addTeam("ferrari")), true);
 			
 			--testar nao existentes
@@ -301,8 +301,8 @@ operations
 			assertEqual(isofclass(Track, rally.addTrack("estoril", "algarve", 123)), true);
 			assertEqual(isofclass(Race, rally.addRaceToCompetition("race1", "wrc", "montecarlo", mk_RallyUtils`Date(2017, 12,31))), true);
 			assertEqual(isofclass(Race, rally.addRaceToCompetition("race2", "wrc", "estoril", mk_RallyUtils`Date(2017, 01, 01))), true);
-			assertEqual(isofclass(Pilot,rally.addPilot("Miguel Alves", mk_RallyUtils`Date(1996, 11,30), <Male>)), true);
-			assertEqual(isofclass(Pilot,rally.addPilot("Ines Ferreira", mk_RallyUtils`Date(1996, 11,30), <Female>)), true);
+			assertEqual(isofclass(Pilot,rally.addPilot("Miguel Alves", mk_RallyUtils`Date(1996, 11,30), "Male")), true);
+			assertEqual(isofclass(Pilot,rally.addPilot("Ines Ferreira", mk_RallyUtils`Date(1996, 11,30), "Female")), true);
 			assertEqual(isofclass(Vehicle,rally.addVehicle("carro1", "mclaren", "p8", "99-00-11")), true);
 			assertEqual(isofclass(Vehicle,rally.addVehicle("carro2", "mclaren", "p8", "99-00-22")), true);
 			assertEqual(isofclass(Sponsor,rally.addSponsor("michelin", "fazem pneus")), true);
@@ -333,7 +333,7 @@ operations
 			assertEqual(isofclass(Track, rally.addTrack("cologne", "alemanha", 555)), true);
 			assertEqual(isofclass(Race, rally.addRaceToCompetition("race3", "f1", "cologne", mk_RallyUtils`Date(2017, 12,31))), true);
 			assertEqual(rally.setParticipantResultInRace("race3", "Ines Ferreira", "carro2", "ferrari", 123), false);
-			assertEqual(isofclass(Pilot,rally.addPilot("Ruben Barriquello", mk_RallyUtils`Date(1996, 11,30), <Male>)), true);
+			assertEqual(isofclass(Pilot,rally.addPilot("Ruben Barriquello", mk_RallyUtils`Date(1996, 11,30), "Male")), true);
 			assertEqual(rally.addPilotToTeam("Ruben Barriquello", "ferrari"), true);
 			assertEqual(rally.setParticipantResultInRace("race3", "Ruben Barriquello", "carro2", "ferrari", 123), false);
 			assertEqual(isofclass(Vehicle,rally.addVehicle("carro3", "mclaren", "p8", "99-00-22")), true);
