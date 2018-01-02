@@ -27,26 +27,15 @@ public class Interface {
 		
 		String[] parts = option.split(" ");
 		
-		TestRally testClass = new TestRally();
-	    testClass.testDates();
-	    testClass.testRallyCreation();
-	    testClass.testAddAndDeleteCompetition();
-	    testClass.testAddAndDeleteTrack();
-	    testClass.testAddAndDeleteRace();
-	    testClass.testAddAndDeletePilot();
-	    testClass.testAddAndDeleteVehicle();
-	    testClass.testAddAndDeleteSponsor();
-	    testClass.testAddAndDeleteTeam();
-	    testClass.testAddAndDeltePilotInTeam();
-	    testClass.testAddAndDeleteSponsorInTeam();
-	    testClass.testAddAndDeleteVehicleInTeam();
-	    testClass.testAddAndDeleteParticipantResult();
-	    testClass.testCalendar();
-	    testClass.testResults();
-		
-		
 		switch(parts[0])
 		{
+			case "resetInfo":
+				rally = new Rally();
+				cycle("");
+				break;
+			case "loadInfo":
+				loadInfoHandler();
+				break;
 			case "addCompetition":
 				addCompetitionHandler(parts);
 				break;
@@ -129,6 +118,26 @@ public class Interface {
 		}
 	}
 	
+	public static void loadInfoHandler()
+	{
+		TestRally testClass = new TestRally();
+	    testClass.testDates();
+	    testClass.testRallyCreation();
+	    testClass.testAddAndDeleteCompetition();
+	    testClass.testAddAndDeleteTrack();
+	    testClass.testAddAndDeleteRace();
+	    testClass.testAddAndDeletePilot();
+	    testClass.testAddAndDeleteVehicle();
+	    testClass.testAddAndDeleteSponsor();
+	    testClass.testAddAndDeleteTeam();
+	    testClass.testAddAndDeltePilotInTeam();
+	    testClass.testAddAndDeleteSponsorInTeam();
+	    testClass.testAddAndDeleteVehicleInTeam();
+	    testClass.testAddAndDeleteParticipantResult();
+	    testClass.testCalendar();
+	    testClass.testResults();
+	    cycle("");
+	}
 	
 	public static void addRaceToCompetitionHandler(String[] message)
 	{
