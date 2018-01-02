@@ -98,3 +98,69 @@ operations
 	post RESULT = resultTime;
 	
 end ResultTimeInfo
+
+
+/**
+ *	ResultPointsInfo class to represent aditional info a ResultPoints.
+ */
+class ResultPointsInfo is subclass of Info
+
+types 
+	public String = seq of char;
+	
+instance variables
+	private pilot : Pilot;
+	private team : Team;
+	private vehicle : Vehicle;
+	private resultPoints : ResultPoints;
+	
+operations
+
+	/**
+	 *	ResultPointsInfo constructor, sets pilot, team, vehicle and the points.
+	 */
+	public ResultPointsInfo: Pilot * Team * Vehicle * ResultPoints ==> ResultPointsInfo
+	ResultPointsInfo(newPilot, newTeam, newVehicle, newResultPoints) ==
+	(
+			pilot := newPilot;
+			team := newTeam;
+			vehicle := newVehicle;
+			resultPoints := newResultPoints;
+			return self;
+	)
+	post pilot = newPilot and team = newTeam and vehicle = newVehicle and resultPoints = newResultPoints;
+	
+	/**
+   *	getPilot, returns pilot.
+ 	 */
+	public getPilot: () ==> Pilot
+	getPilot() == return pilot
+	post RESULT = pilot;
+	
+	/**
+   *	getTeam, retuns team.
+ 	 */
+	public getTeam: () ==> Team
+	getTeam() == return team
+	post RESULT = team;
+	
+	/**
+   *	getVehicle, returns vehicle.
+ 	 */
+	public getVehicle: () ==> Vehicle
+	getVehicle() == return vehicle
+	post RESULT = vehicle;
+	/**
+	 *	getResultPoints, returns resultPoints.
+	 */
+	public getResultPoints: () ==> ResultPoints
+	getResultPoints() == return resultPoints
+	post RESULT = resultPoints;
+	
+	/**
+	 *	addResultPoints, add resultPoints.
+	 */
+	public addPoints: nat1 ==> ()
+	addPoints(points) == resultPoints.addPoints(points);
+	
+end ResultPointsInfo

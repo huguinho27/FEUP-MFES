@@ -805,9 +805,123 @@ operations
   		)
   		elseif competitionTemp <> nil then
   		(
+  			dcl sequenceComp : seq of ResultPointsInfo := [];
+  			dcl sequenceCompFinal : seq of ResultPointsInfo := [];
+  			
   			--competition scope
   			competition := competitionTemp;
-  		
+  			for all raceLoop in set competition.getRaces() do
+  			(
+  				dcl sequence : seq of ResultTimeInfo := [];
+  				
+	  			for all participant in set dom raceLoop.getResults() do
+	  			(
+	  					dcl resultTimeInfoTemp : ResultTimeInfo := new ResultTimeInfo(participant, raceLoop.getResults()(participant));
+	  					
+	  					--algorithm to input in sequence
+							if len sequence < 1 then sequence := sequence ^ [resultTimeInfoTemp]
+							else
+							(
+									dcl index : int := -1;
+									
+									for i = 1 to len sequence by 1 do
+									(
+											if raceLoop.getResults()(participant).getTime() < sequence(i).getResultTime().getTime() and index = -1
+											then index := i; 
+									);
+									
+									if index = 1 then sequence := [resultTimeInfoTemp] ^ sequence
+									elseif index = -1 then sequence := sequence ^ [resultTimeInfoTemp]
+									else
+									(
+											dcl head : seq of ResultTimeInfo := sequence(1,..., index - 1);
+											dcl tail : seq of ResultTimeInfo := sequence(index,..., len sequence);
+											
+											sequence := head ^ [resultTimeInfoTemp] ^ tail;
+									)
+							)	
+	  			);
+	  			
+	  			
+	  			--add points
+	  			for i = 1 to len sequence by 1 do
+	  			(
+	  					dcl found : bool := false;	
+	  					for j = 1 to len sequenceComp by 1 do
+	  					(
+	  							if RallyUtils`equalString(sequenceComp(j).getPilot().getName(), sequence(i).getParticipant().getPilot().getName())
+	  							and RallyUtils`equalString(sequenceComp(j).getVehicle().getName(), sequence(i).getParticipant().getVehicle().getName())
+	  							and RallyUtils`equalString(sequenceComp(j).getTeam().getName(), sequence(i).getParticipant().getTeam().getName())
+	  							and found = false
+	  							then
+	  							(
+	  								skip;
+	  								
+	  									found := true;	
+	  									if i > len RallyUtils`CompetitionPoints then sequenceComp(j).addPoints(1)
+	  									else sequenceComp(j).addPoints(RallyUtils`CompetitionPoints(i))		
+	  									
+	  							)
+	  					);
+	  					
+	  					if found = false then 
+	  					(
+	  							dcl points : nat1;
+	  							if i > len RallyUtils`CompetitionPoints then points := 1
+	  							else points := RallyUtils`CompetitionPoints(i);
+	  							
+	  							sequenceComp := sequenceComp ^ [new ResultPointsInfo(
+	  								sequence(i).getParticipant().getPilot(), 
+	  								sequence(i).getParticipant().getTeam(),
+	  								sequence(i).getParticipant().getVehicle(),
+	  								new ResultPoints(points))];	  						
+	  					)
+	  			)		
+	  		);
+	  		
+	  		--final sort 
+	  		for k = 1 to len sequenceComp by 1 do
+	  		(
+			  	--algorithm to input in sequence
+					if len sequenceCompFinal < 1 then sequenceCompFinal := sequenceCompFinal ^ [sequenceComp(k)]
+					else
+					(
+							dcl index : int := -1;
+							
+							for i = 1 to len sequenceCompFinal by 1 do
+							(
+									if sequenceComp(k).getResultPoints().getPoints() > sequenceCompFinal(i).getResultPoints().getPoints() and index = -1
+									then index := i; 
+							);
+							
+							if index = 1 then sequenceCompFinal := [sequenceComp(k)] ^ sequenceCompFinal
+							elseif index = -1 then sequenceCompFinal := sequenceCompFinal ^ [sequenceComp(k)]
+							else
+							(
+									dcl head : seq of ResultPointsInfo := sequenceCompFinal(1,..., index - 1);
+									dcl tail : seq of ResultPointsInfo := sequenceCompFinal(index,..., len sequenceCompFinal);
+									
+									sequenceCompFinal := head ^ [sequenceComp(k)] ^ tail;
+							)
+					)
+				);	
+	  		
+	  		--list points
+	  		
+	  		IO`print("\n\nCompetition Results: ");
+	  		IO`println(eventName);
+	  		for  i = 1 to len sequenceCompFinal by 1 do
+	  		(
+	  				IO`print("	Pilot: ");
+	  				IO`print(sequenceCompFinal(i).getPilot().getName());
+	  				IO`print("; Team: ");
+	  				IO`print(sequenceCompFinal(i).getTeam().getName());
+	  				IO`print("; Vehicle: ");
+	  				IO`print(sequenceCompFinal(i).getVehicle().getName());
+	  				IO`print("; Time: ");
+	  				IO`print(sequenceCompFinal(i).getResultPoints().getPoints());
+	  				IO`println("");
+	  		);
   		)
   		else
   		(
