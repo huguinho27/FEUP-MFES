@@ -54,6 +54,47 @@ operations
 	getDate() == return date
 	post RESULT = date;
 	
-
-
 end RaceInfo
+
+
+/**
+ *	ResultTimeInfo class to represent aditional info a ResultTime.
+ */
+class ResultTimeInfo is subclass of Info
+
+types 
+	public String = seq of char;
+	
+instance variables
+	private participant : Participant;
+	private resultTime : ResultTime;
+	
+operations
+
+	/**
+	 *	ResultTimeInfo constructor, sets participant and resultTime.
+	 */
+	public ResultTimeInfo: Participant * ResultTime ==> ResultTimeInfo
+	ResultTimeInfo(newParticipant, newResultTime) ==
+	(
+			participant := newParticipant;
+			resultTime := newResultTime;
+			return self;
+	)
+	post participant = newParticipant and resultTime = newResultTime;
+	
+	/**
+	 *	getParticipant, returns participant.
+	 */
+	public getParticipant: () ==> Participant
+	getParticipant() == return participant
+	post RESULT = participant;
+	
+	/**
+	 *	getResultTime, returns resultTime.
+	 */
+	public getResultTime: () ==> ResultTime
+	getResultTime() == return resultTime
+	post RESULT = resultTime;
+	
+end ResultTimeInfo

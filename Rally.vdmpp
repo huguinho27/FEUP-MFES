@@ -793,8 +793,73 @@ operations
   public listResults: String ==> ()
   listResults(eventName) ==
   (
-  		IO`print(eventName);
-  		skip;
+  		dcl competitionTemp : ? := RallyUtils`checkIfExistsCompetition(eventName, competitions);
+  		dcl raceTemp : ? := RallyUtils`checkIfExistsRace(eventName, races);
+  		dcl competition: Competition;
+  		dcl race : Race;
+  		
+  		if competitionTemp = nil and raceTemp = nil then
+  		(
+  				IO`print("\n\nNo available race or competition: ");
+  				IO`println(eventName);
+  		)
+  		elseif competitionTemp <> nil then
+  		(
+  			--competition scope
+  			competition := competitionTemp;
+  		
+  		)
+  		else
+  		(
+  			--race scope
+  			dcl sequence : seq of ResultTimeInfo := [];
+  			race := raceTemp;
+  			
+  			for all participant in set dom race.getResults() do
+  			(
+  					dcl resultTimeInfoTemp : ResultTimeInfo := new ResultTimeInfo(participant, race.getResults()(participant));
+  					
+  					--algorithm to input in sequence
+						if len sequence < 1 then sequence := sequence ^ [resultTimeInfoTemp]
+						else
+						(
+								dcl index : int := -1;
+								
+								for i = 1 to len sequence by 1 do
+								(
+										if race.getResults()(participant).getTime() < sequence(i).getResultTime().getTime() and index = -1
+										then index := i; 
+								);
+								
+								if index = 1 then sequence := [resultTimeInfoTemp] ^ sequence
+								elseif index = -1 then sequence := sequence ^ [resultTimeInfoTemp]
+								else
+								(
+										dcl head : seq of ResultTimeInfo := sequence(1,..., index - 1);
+										dcl tail : seq of ResultTimeInfo := sequence(index,..., len sequence);
+										
+										sequence := head ^ [resultTimeInfoTemp] ^ tail;
+								);
+						);	
+  			);
+
+				IO`print("\n\nRace Results: ");
+	  		IO`println(eventName);
+	  		for  i = 1 to len sequence by 1 do
+	  		(
+	  				IO`print("	Pilot: ");
+	  				IO`print(sequence(i).getParticipant().getPilot().getName());
+	  				IO`print("; Team: ");
+	  				IO`print(sequence(i).getParticipant().getTeam().getName());
+	  				IO`print("; Vehicle: ");
+	  				IO`print(sequence(i).getParticipant().getVehicle().getName());
+	  				IO`print("; Time: ");
+	  				IO`print(sequence(i).getResultTime().getTime());
+	  				IO`println("");
+	  		);
+
+				
+  		);
   );	
 
 end Rally

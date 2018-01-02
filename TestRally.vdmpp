@@ -41,6 +41,7 @@ operations
 			testClass.testAddAndDeleteVehicleInTeam();
 			testClass.testAddAndDeleteParticipantResult();
 			testClass.testCalendar();
+			testClass.testResults();
 	
 	);
 	
@@ -423,6 +424,26 @@ operations
 	(
 			dcl rally: Rally := new Rally();
 			
+			--adding races
+			assertEqual(isofclass(Competition, rally.addCompetition("wrc", "wrc rally")), true);
+			assertEqual(isofclass(Competition, rally.addCompetition("f1", "formula 1")), true);
+			assertEqual(isofclass(Track, rally.addTrack("montecarlo", "italia", 123)), true);
+			assertEqual(isofclass(Track, rally.addTrack("estoril", "algarve", 123)), true);
+			assertEqual(isofclass(Race, rally.addRaceToCompetition("race1", "wrc", "montecarlo", mk_RallyUtils`Date(2017, 01, 01))), true);
+			assertEqual(isofclass(Race, rally.addRaceToCompetition("race2", "wrc", "montecarlo", mk_RallyUtils`Date(2017, 01, 02))), true);		
+			assertEqual(isofclass(Race, rally.addRaceToCompetition("race3", "wrc", "montecarlo", mk_RallyUtils`Date(2017, 01, 04))), true);
+			assertEqual(isofclass(Race, rally.addRaceToCompetition("race4", "wrc", "montecarlo", mk_RallyUtils`Date(2017, 01, 03))), true);
+			assertEqual(isofclass(Race, rally.addRaceToCompetition("race5", "f1", "estoril", mk_RallyUtils`Date(2017, 01, 03))), true);
+		
+			rally.listCalendar();
+	);
+	
+	public testResults: () ==> ()
+	testResults() ==
+	(
+			dcl rally: Rally := new Rally();
+			
+			--adding races
 			assertEqual(isofclass(Competition, rally.addCompetition("wrc", "wrc rally")), true);
 			assertEqual(isofclass(Competition, rally.addCompetition("f1", "formula 1")), true);
 			assertEqual(isofclass(Track, rally.addTrack("montecarlo", "italia", 123)), true);
@@ -434,7 +455,37 @@ operations
 			assertEqual(isofclass(Race, rally.addRaceToCompetition("race5", "f1", "estoril", mk_RallyUtils`Date(2017, 01, 03))), true);
 			
 			
-			rally.listCalendar();
+			--adding team, pilots and vehicles
+			assertEqual(isofclass(Team, rally.addTeam("ferrari")), true);
+			assertEqual(isofclass(Pilot,rally.addPilot("Miguel Alves", mk_RallyUtils`Date(1996, 11,30), "Male")), true);
+			assertEqual(isofclass(Pilot,rally.addPilot("Jose Manuel", mk_RallyUtils`Date(1996, 11,30), "Male")), true);
+			assertEqual(isofclass(Pilot,rally.addPilot("Ruben Barriquello", mk_RallyUtils`Date(1996, 11,30), "Male")), true);
+			assertEqual(isofclass(Pilot,rally.addPilot("Pedro Mota", mk_RallyUtils`Date(1996, 11,30), "Male")), true);
+			assertEqual(isofclass(Vehicle,rally.addVehicle("carro1", "mclaren", "p8", "99-00-11")), true);
+			assertEqual(isofclass(Vehicle,rally.addVehicle("carro2", "mclaren", "p8", "99-00-12")), true);
+			assertEqual(isofclass(Vehicle,rally.addVehicle("carro3", "mclaren", "p8", "99-00-13")), true);
+			assertEqual(isofclass(Vehicle,rally.addVehicle("carro4", "mclaren", "p8", "99-00-14")), true);
+			assertEqual(rally.addPilotToTeam("Miguel Alves", "ferrari"), true);
+			assertEqual(rally.addPilotToTeam("Jose Manuel", "ferrari"), true);
+			assertEqual(rally.addPilotToTeam("Ruben Barriquello", "ferrari"), true);
+			assertEqual(rally.addPilotToTeam("Pedro Mota", "ferrari"), true);
+			assertEqual(rally.addVehicleToTeam("carro1", "ferrari"), true);
+			assertEqual(rally.addVehicleToTeam("carro2", "ferrari"), true);
+			assertEqual(rally.addVehicleToTeam("carro3", "ferrari"), true);
+			assertEqual(rally.addVehicleToTeam("carro4", "ferrari"), true);
+			
+			
+			--adding results to race1
+			assertEqual(rally.setParticipantResultInRace("race1", "Miguel Alves", "carro1", "ferrari", 349), true);
+			assertEqual(rally.setParticipantResultInRace("race1", "Jose Manuel", "carro2", "ferrari", 555), true);
+			assertEqual(rally.setParticipantResultInRace("race1", "Ruben Barriquello", "carro3", "ferrari", 190), true);
+			assertEqual(rally.setParticipantResultInRace("race1", "Pedro Mota", "carro4", "ferrari", 203), true);
+			
+			
+			
+			
+			rally.listResults("race1");
+	
 	);
 	
 	
