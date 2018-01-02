@@ -40,6 +40,7 @@ operations
 			testClass.testAddAndDeleteSponsorInTeam();
 			testClass.testAddAndDeleteVehicleInTeam();
 			testClass.testAddAndDeleteParticipantResult();
+			testClass.testCalendar();
 	
 	);
 	
@@ -63,6 +64,24 @@ operations
 		
 			--test equal, not true in year
 			assertEqual(RallyUtils`equalDate(date1, date5), false);
+			
+			--test date lower (equal dates)
+			assertEqual(RallyUtils`isDateLowerThanDate(date1, date2), false);
+			assertEqual(RallyUtils`isDateLowerThanDate(date1, date2), false);
+			
+			--test date lower (different year)
+			assertEqual(RallyUtils`isDateLowerThanDate(date5, date1), false);
+			assertEqual(RallyUtils`isDateLowerThanDate(date1, date5), true);
+			
+			--test date lower (different month)
+			assertEqual(RallyUtils`isDateLowerThanDate(date3, date4), true);
+			assertEqual(RallyUtils`isDateLowerThanDate(date4, date3), false);
+			
+			--test date lower (different day)
+			assertEqual(RallyUtils`isDateLowerThanDate(date2, date3), true);
+			assertEqual(RallyUtils`isDateLowerThanDate(date3, date2), false);
+			
+			
 	);
 
 	/** 
@@ -393,6 +412,29 @@ operations
 			rally.listCalendar();
 			rally.listApplication();
 			
+	);
+	
+	
+	/** 
+	 * testCalendar, tests the listing of the calendar.
+	 */
+	public testCalendar: () ==> ()
+	testCalendar() ==
+	(
+			dcl rally: Rally := new Rally();
+			
+			assertEqual(isofclass(Competition, rally.addCompetition("wrc", "wrc rally")), true);
+			assertEqual(isofclass(Competition, rally.addCompetition("f1", "formula 1")), true);
+			assertEqual(isofclass(Track, rally.addTrack("montecarlo", "italia", 123)), true);
+			assertEqual(isofclass(Track, rally.addTrack("estoril", "algarve", 123)), true);
+			assertEqual(isofclass(Race, rally.addRaceToCompetition("race1", "wrc", "montecarlo", mk_RallyUtils`Date(2017, 01, 01))), true);
+			assertEqual(isofclass(Race, rally.addRaceToCompetition("race2", "wrc", "montecarlo", mk_RallyUtils`Date(2017, 01, 02))), true);		
+			assertEqual(isofclass(Race, rally.addRaceToCompetition("race3", "wrc", "montecarlo", mk_RallyUtils`Date(2017, 01, 04))), true);
+			assertEqual(isofclass(Race, rally.addRaceToCompetition("race4", "wrc", "montecarlo", mk_RallyUtils`Date(2017, 01, 03))), true);
+			assertEqual(isofclass(Race, rally.addRaceToCompetition("race5", "f1", "estoril", mk_RallyUtils`Date(2017, 01, 03))), true);
+			
+			
+			rally.listCalendar();
 	);
 	
 	

@@ -690,7 +690,6 @@ operations
 		  				IO`print(sponsor.getDescription());
 		  				IO`println(""); 
 		  		);
-  				
   				IO`println("");
   		);
   		
@@ -725,14 +724,66 @@ operations
 		  						IO`print("; Result: "); 
 		  						IO`print(race.getResults()(participant).getTime()); 
 		  						IO`println("");	
-  						);
+  						);		
+  				);
+  		);
+  );
+  
+  /**
+	 * listCalendar, lists a ordered table of the next scheduled matches.
+	 */
+  public listCalendar: () ==> ()
+  listCalendar() ==
+  (
+  		dcl sequence : seq of RaceInfo := [];
+  		
+  		for all competition in set competitions do
+  		(
+  				for all race in set competition.getRaces() do
+  				(
+  						dcl raceInfoTemp: RaceInfo := new RaceInfo(race, competition, race.getDate());
   						
-  						
+  						--algorithm to input in sequence
+  						if len sequence < 1 then sequence := sequence ^ [raceInfoTemp]
+  						else
+  						(
+  								dcl index : int := -1;
+  								
+  								for i = 1 to len sequence by 1 do
+  								(
+  										if RallyUtils`isDateLowerThanDate(race.getDate(), sequence(i).getDate()) and index = -1
+  										then index := i; 
+  								);
+  								
+  								if index = 1 then sequence := [raceInfoTemp] ^ sequence
+  								elseif index = -1 then sequence := sequence ^ [raceInfoTemp]
+  								else
+  								(
+  										dcl head : seq of RaceInfo := sequence(1,..., index - 1);
+  										dcl tail : seq of RaceInfo := sequence(index,..., len sequence);
+  										
+  										sequence := head ^ [raceInfoTemp] ^ tail;
+  								);
+  						);			
   				);
   		);
   		
-  		
-  );
+  		IO`println("\n\nCalendar");
+  		for  i = 1 to len sequence by 1 do
+  		(
+  				IO`print("	Competition: ");
+  				IO`print(sequence(i).getCompetition().getName());
+  				IO`print("; Race: ");
+  				IO`print(sequence(i).getRace().getName());
+  				IO`print("; Track: ");
+  				IO`print(sequence(i).getRace().getTrack().getName());
+  				IO`print("; Location: ");
+  				IO`print(sequence(i).getRace().getTrack().getLocation());
+  				IO`print("; Date: ");
+  				IO`print(RallyUtils`getDateString(sequence(i).getDate()));
+  				IO`println("");
+  		);
+	);
   
   
 	/**
@@ -744,22 +795,7 @@ operations
   (
   		IO`print(eventName);
   		skip;
-  );
-  
-	/**
-	 * listCalendar, lists a ordered table of the next scheduled matches.
-	 */
-  public listCalendar: () ==> ()
-  listCalendar() ==
-  (
-  		skip;
-	);
-  
-	 
-	
-
-	
-	
+  );	
 
 end Rally
 

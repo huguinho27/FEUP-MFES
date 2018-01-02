@@ -1,0 +1,59 @@
+/**
+ *	Info class to represent generic info.
+ */
+class Info
+
+end Info
+
+/**
+ *	RaceInfo class to represent aditional info for a Race.
+ */
+class RaceInfo is subclass of Info
+
+types 
+	public String = seq of char;
+	
+instance variables
+	private race : Race;
+	private competition : Competition;
+	private date : RallyUtils`Date;
+	
+operations
+
+	/**
+	 *	RaceInfo constructor, sets race, competition and date.
+	 */
+	public RaceInfo: Race * Competition * RallyUtils`Date ==> RaceInfo
+	RaceInfo(newRace, newCompetition, newDate) ==
+	(
+			race := newRace;
+			competition := newCompetition;
+			date := newDate;
+			return self;
+	)
+	post race = newRace and competition = newCompetition and newDate = newDate;
+	
+	/**
+	 *	getRace, returns race.
+	 */
+	public getRace: () ==> Race
+	getRace() == return race
+	post RESULT = race;
+	
+	/**
+	 *	getCompetition, returns competition.
+	 */
+	public getCompetition: () ==> Competition
+	getCompetition() == return competition
+	post RESULT = competition;
+	
+	/**
+	 *	getDate, returns date.
+	 */
+	public getDate: () ==> RallyUtils`Date
+	getDate() == return date
+	post RESULT = date;
+	
+
+
+end RaceInfo
