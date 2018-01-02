@@ -24,10 +24,25 @@ public class Interface {
 			System.out.println(response);
 		System.out.println("> ");
 		String option = scan.nextLine();
+		
 		String[] parts = option.split(" ");
 		
-		/*for (int i = 0; i < parts.length;i++)
-			System.out.println(parts[i]);*/
+		TestRally testClass = new TestRally();
+	    testClass.testDates();
+	    testClass.testRallyCreation();
+	    testClass.testAddAndDeleteCompetition();
+	    testClass.testAddAndDeleteTrack();
+	    testClass.testAddAndDeleteRace();
+	    testClass.testAddAndDeletePilot();
+	    testClass.testAddAndDeleteVehicle();
+	    testClass.testAddAndDeleteSponsor();
+	    testClass.testAddAndDeleteTeam();
+	    testClass.testAddAndDeltePilotInTeam();
+	    testClass.testAddAndDeleteSponsorInTeam();
+	    testClass.testAddAndDeleteVehicleInTeam();
+	    testClass.testAddAndDeleteParticipantResult();
+	    testClass.testCalendar();
+	    testClass.testResults();
 		
 		
 		switch(parts[0])
@@ -102,13 +117,15 @@ public class Interface {
 				listResultsHandler(parts);
 				break;
 			case "listApplication":
-				listApplicationHandler(parts);
+				rally.listApplication();
+				cycle("");
 				break;
 			case "listCalendar":
-				listCalendarHandler(parts);
+				rally.listCalendar();
+				cycle("");
 				break;
 			default:
-				cycle("");
+				cycle("Bad Command");
 		}
 	}
 	
@@ -116,7 +133,7 @@ public class Interface {
 	public static void addRaceToCompetitionHandler(String[] message)
 	{
 		if (message.length != 5)
-			cycle("");
+			cycle("Bad Command");
 		
 		String racename = separateName(message[1]);
 		String compName = separateName(message[2]);
@@ -124,7 +141,7 @@ public class Interface {
 		
 		String[] bday = message[4].split("-");
 		if (bday.length != 3)
-				cycle("");
+				cycle("Bad Command");
 		
 		Object obj = rally.addRaceToCompetition(racename,compName,
 				trackName, new RallyUtils.Date(Long.parseLong(bday[0]), Long.parseLong(bday[1]), 
@@ -133,43 +150,21 @@ public class Interface {
 		cycle("");
 	}
 	
-	public static void listCalendarHandler(String[] message)
-	{
-		if (message.length != 1)
-			cycle("");
-		
-		
-		//TODO: String obj = rally.listCalendar();
-		System.out.println("");
-		cycle("");
-	}
-	
-	public static void listApplicationHandler(String[] message)
-	{
-		if (message.length != 1)
-			cycle("");
-		
-		//TODO: String obj = rally.listApplication();
-		System.out.println("");
-		cycle("");
-	}
-	
 	public static void listResultsHandler(String[] message)
 	{
 		if (message.length != 2)
-			cycle("");
+			cycle("Bad Command");
 		
 		String eventname = separateName(message[1]);
 		
-		//TODO: String obj = rally.listResults(eventname);
-		System.out.println("");
+		rally.listResults(eventname);
 		cycle("");
 	}
 	
 	public static void setParticipantResultInRaceHandler(String[] message)
 	{
 		if (message.length != 6)
-			cycle("");
+			cycle("Bad Command");
 		
 		String racename = separateName(message[1]);
 		String pilotName = separateName(message[2]);
@@ -185,12 +180,12 @@ public class Interface {
 	public static void deletePilotParticipantFromRaceHandler(String[] message)
 	{
 		if (message.length != 3)
-			cycle("");
+			cycle("Bad Command");
 		
 		String name = separateName(message[1]);
-		String teamName = separateName(message[2]);
+		String raceName = separateName(message[2]);
 		
-		Object obj = rally.deletePilotParticipantFromRace(name,teamName);
+		Object obj = rally.deletePilotParticipantFromRace(name,raceName);
 		System.out.println(obj);
 		cycle("");
 	}
@@ -198,7 +193,7 @@ public class Interface {
 	public static void deleteVehicleFromTeamHandler(String[] message)
 	{
 		if (message.length != 3)
-			cycle("");
+			cycle("Bad Command");
 		
 		String name = separateName(message[1]);
 		String teamName = separateName(message[2]);
@@ -211,7 +206,7 @@ public class Interface {
 	public static void addVehicleToTeamHandler(String[] message)
 	{
 		if (message.length != 3)
-			cycle("");
+			cycle("Bad Command");
 		
 		String name = separateName(message[1]);
 		String teamName = separateName(message[2]);
@@ -224,7 +219,7 @@ public class Interface {
 	public static void deleteSponsorFromTeamHandler(String[] message)
 	{
 		if (message.length != 3)
-			cycle("");
+			cycle("Bad Command");
 		
 		String name = separateName(message[1]);
 		String teamName = separateName(message[2]);
@@ -237,7 +232,7 @@ public class Interface {
 	public static void addSponsorToTeamHandler(String[] message)
 	{
 		if (message.length != 3)
-			cycle("");
+			cycle("Bad Command");
 		
 		String name = separateName(message[1]);
 		String teamName = separateName(message[2]);
@@ -250,7 +245,7 @@ public class Interface {
 	public static void deletePilotFromTeamHandler(String[] message)
 	{
 		if (message.length != 3)
-			cycle("");
+			cycle("Bad Command");
 		
 		String name = separateName(message[1]);
 		String teamName = separateName(message[2]);
@@ -263,7 +258,7 @@ public class Interface {
 	public static void addPilotToTeamHandler(String[] message)
 	{
 		if (message.length != 3)
-			cycle("");
+			cycle("Bad Command");
 		
 		String name = separateName(message[1]);
 		String teamName = separateName(message[2]);
@@ -276,7 +271,8 @@ public class Interface {
 	public static void deleteRaceHandler(String[] message)
 	{
 		if (message.length != 2)
-			cycle("");
+			cycle("Bad Command");
+		
 		String name = separateName(message[1]);
 		Object obj = rally.deleteRace(name);
 		System.out.println(obj);
@@ -286,7 +282,7 @@ public class Interface {
 	public static void deleteTrackHandler(String[] message)
 	{
 		if (message.length != 2)
-			cycle("");
+			cycle("Bad Command");
 		String name = separateName(message[1]);
 		Object obj = rally.deleteTrack(name);
 		System.out.println(obj);
@@ -296,7 +292,7 @@ public class Interface {
 	public static void addTrackHandler(String[] message)
 	{
 		if (message.length != 4)
-			cycle("");
+			cycle("Bad Command");
 		String name = separateName(message[1]);
 		
 		Object obj = rally.addTrack(name,message[2],Integer.parseInt(message[3]));
@@ -307,7 +303,7 @@ public class Interface {
 	public static void deleteCompetitionHandler(String[] message)
 	{
 		if (message.length != 2)
-			cycle("");
+			cycle("Bad Command");
 		String name = separateName(message[1]);
 		Object obj = rally.deleteCompetition(name);
 		System.out.println(obj);
@@ -317,7 +313,7 @@ public class Interface {
 	public static void addCompetitionHandler(String[] message)
 	{
 		if (message.length != 3)
-			cycle("");
+			cycle("Bad Command");
 		String name = separateName(message[1]);
 		String description = separateName(message[2]);
 		Object obj = rally.addCompetition(name,description);
@@ -328,7 +324,8 @@ public class Interface {
 	public static void deleteTeamHandler(String[] message)
 	{
 		if (message.length != 2)
-			cycle("");
+			cycle("Bad Command");
+		
 		String name = separateName(message[1]);
 		Object obj = rally.deleteTeam(name);
 		System.out.println(obj);
@@ -338,7 +335,8 @@ public class Interface {
 	public static void addTeamHandler(String[] message)
 	{
 		if (message.length != 2)
-			cycle("");
+			cycle("Bad Command");
+		
 		String name = separateName(message[1]);
 		Object obj = rally.addTeam(name);
 		System.out.println(obj);
@@ -348,7 +346,7 @@ public class Interface {
 	public static void deleteSponsorHandler(String[] message)
 	{
 		if (message.length != 2)
-			cycle("");
+			cycle("Bad Command");
 		String name = separateName(message[1]);
 		Object obj = rally.deleteSponsor(name);
 		System.out.println(obj);
@@ -358,9 +356,11 @@ public class Interface {
 	public static void addSponsorHandler(String[] message)
 	{
 		if (message.length != 3)
-			cycle("");
+			cycle("Bad Command");
+		
 		String name = separateName(message[1]);
 		String description = separateName(message[2]);
+		
 		Object obj = rally.addSponsor(name,description);
 		System.out.println(obj);
 		cycle("");
@@ -369,7 +369,8 @@ public class Interface {
 	public static void deleteVehicleHandler(String[] message)
 	{
 		if (message.length != 2)
-			cycle("");
+			cycle("Bad Command");
+		
 		String name = separateName(message[1]);
 		Object obj = rally.deleteVehicle(name);
 		System.out.println(obj);
@@ -379,7 +380,8 @@ public class Interface {
 	public static void addVehicleHandler(String[] message)
 	{
 		if (message.length != 5)
-			cycle("");
+			cycle("Bad Command");
+		
 		String name = separateName(message[1]);
 		Object obj = rally.addVehicle(name,message[2],message[3],message[4]);
 		System.out.println(obj);
@@ -428,5 +430,4 @@ public class Interface {
 		}
 		return name;
 	}
-
 }
