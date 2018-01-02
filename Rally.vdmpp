@@ -596,6 +596,145 @@ operations
   		return true;
   );
   
+  /**
+	 * listApplication, lists the whole Rally Application.
+	 */
+  public listApplication: () ==> ()
+  listApplication() ==
+  (
+  		IO`println("\n\nApplication Rally\n");
+  		
+  		IO`println("Available Tracks:");		
+  		for all track in set tracks do
+  		(
+  				IO`print("	Track: "); 
+  				IO`print(track.getName()); 
+  				IO`print("; Location: "); 
+  				IO`print(track.getLocation()); 
+  				IO`print("; Distance: ");
+  				IO`print(track.getDistance());
+  				IO`println("");
+  		);
+  		
+  		IO`println("\nAvailable Pilots:");
+  		for all pilot in set pilots do
+  		(
+  				IO`print("	Pilot: "); 
+  				IO`print(pilot.getName()); 
+  				IO`print("; Birthday: "); 
+  				IO`print(RallyUtils`getDateString(pilot.getBirthday())); 
+  				IO`print("; Gender: ");
+  				IO`print(pilot.getGender());
+  				IO`println("");
+  		);
+  		
+  		IO`println("\nAvailable Vehicles:");
+  		for all vehicle in set vehicles do
+  		(
+  				IO`print("	Vehicle: "); 
+  				IO`print(vehicle.getName()); 
+  				IO`print("; Brand: "); 
+  				IO`print(vehicle.getBrand()); 
+  				IO`print("; Model: ");
+  				IO`print(vehicle.getModel());
+  				IO`print("; Plate: ");
+  				IO`print(vehicle.getPlate());
+  				IO`println("");
+  		);
+  		
+  		IO`println("\nAvailable Sponsors:");
+  		for all sponsor in set sponsors do
+  		(
+  				IO`print("	Sponsor: "); 
+  				IO`print(sponsor.getName()); 
+  				IO`print("; Description: "); 
+  				IO`print(sponsor.getDescription()); 
+  				IO`println("");
+  		);
+  		
+  		IO`println("\nAvailable Teams:");
+  		for all team in set teams do
+  		(
+  				IO`print("	Team: "); 
+  				IO`println(team.getName()); 
+  				IO`println("	Pilots:");
+		  		for all pilot in set team.getPilots() do
+		  		(
+		  				IO`print("		Pilot: "); 
+		  				IO`print(pilot.getName()); 
+		  				IO`print("; Birthday: "); 
+		  				IO`print(RallyUtils`getDateString(pilot.getBirthday())); 
+		  				IO`print("; Gender: ");
+		  				IO`print(pilot.getGender());
+		  				IO`println("");
+		  		);
+		  		IO`println("	Vehicles:");
+		  		for all vehicle in set team.getVehicles() do
+		  		(
+		  				IO`print("		Vehicle: "); 
+		  				IO`print(vehicle.getName()); 
+		  				IO`print("; Brand: "); 
+		  				IO`print(vehicle.getBrand()); 
+		  				IO`print("; Model: ");
+		  				IO`print(vehicle.getModel());
+		  				IO`print("; Plate: ");
+		  				IO`print(vehicle.getPlate());
+		  				IO`println("");
+		  		);
+		  		IO`println("	Sponsors:");
+		  		for all sponsor in set team.getSponsors() do
+		  		(
+		  				IO`print("		Sponsor: "); 
+		  				IO`print(sponsor.getName()); 
+		  				IO`print("; Description: "); 
+		  				IO`print(sponsor.getDescription());
+		  				IO`println(""); 
+		  		);
+  				
+  				IO`println("");
+  		);
+  		
+  		IO`println("\nAvailable Competitions:");
+  		for all competition in set competitions do
+  		(
+  				IO`print("	Competition: "); 
+  				IO`print(competition.getName()); 
+  				IO`print("; Description: "); 
+  				IO`print(competition.getDescription()); 
+  				IO`println("");
+  				
+  				for all race in set competition.getRaces() do
+  				(
+  						IO`print("		Race: "); 
+  						IO`print(race.getName()); 
+  						IO`print("; Track: "); 
+  						IO`print(race.getTrack().getName());
+  						IO`print("; Date: "); 
+  						IO`print(RallyUtils`getDateString(race.getDate()));  	
+  						IO`println("");	
+  						
+  						IO`println("		Results:");
+  					  for all participant in set dom race.getResults() do
+  						(	
+		  						IO`print("			Pilot: "); 
+		  						IO`print(participant.getPilot().getName()); 
+		  						IO`print("; Team: "); 
+		  						IO`print(participant.getTeam().getName());
+		  						IO`print("; Vehicle: "); 
+		  						IO`print(participant.getVehicle().getName());  	
+		  						IO`print("; Result: "); 
+		  						IO`print(race.getResults()(participant).getTime()); 
+		  						IO`println("");	
+  						);
+  						
+  						
+  				);
+  		);
+  		
+  		
+  );
+  
+  
 	/**
 	 * listResults, lists a ordered Table of results from a event, either a Competition or a Race.
 	 * searches for Competitions first.
@@ -604,15 +743,6 @@ operations
   listResults(eventName) ==
   (
   		IO`print(eventName);
-  		skip;
-  );
-  
-	/**
-	 * listApplication, lists the whole Rally Application.
-	 */
-  public listApplication: () ==> ()
-  listApplication() ==
-  (
   		skip;
   );
   

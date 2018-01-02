@@ -197,6 +197,18 @@ operations
 		return true
 	);
 	
+	public static getDateString: Date ==> String
+	getDateString(date) ==
+	(
+			dcl dateStr : String := "";
+			dateStr := dateStr ^ VDMUtil`val2seq_of_char[nat1](date.year);
+			dateStr := dateStr ^ "-";
+			dateStr := dateStr ^ VDMUtil`val2seq_of_char[nat1](date.month);
+			dateStr := dateStr ^ "-";
+			dateStr := dateStr ^ VDMUtil`val2seq_of_char[nat1](date.day);
+			return dateStr;
+	);
+	
 
 end RallyUtils
 
