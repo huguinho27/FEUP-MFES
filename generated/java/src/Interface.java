@@ -12,10 +12,10 @@ public class Interface {
 	}
 
 	public static void main(String[] args) {
-		//IO.println(Utils.toString(Utils.VOID_VALUE));
+		//IO.println(Utils.toString(Utils.VOID_VALUE);
 		rally = new Rally();
 		scan = new Scanner(System.in);
-		cycle("");
+		cycle("To list all information type: listAll");
 	}
 	
 	public static void cycle(String response)
@@ -29,6 +29,9 @@ public class Interface {
 		
 		switch(parts[0])
 		{
+			case "listAll":
+				listAllHandler();
+				break;
 			case "resetInfo":
 				rally = new Rally();
 				cycle("");
@@ -118,24 +121,141 @@ public class Interface {
 		}
 	}
 	
+	public static void listAllHandler()
+	{
+		System.out.println("resetInfo");
+		System.out.println("loadInfo");
+		System.out.println("addCompetition");
+		System.out.println("deleteCompetition");
+		System.out.println("addTrack");
+		System.out.println("deleteTrack");
+		System.out.println("addRaceToCompetition");
+		System.out.println("deleteRace");
+		System.out.println("addPilot");
+		System.out.println("addVehicle");
+		System.out.println("deleteVehicle");
+		System.out.println("addSponsor");
+		System.out.println("deleteSponsor");
+		System.out.println("addTeam");
+		System.out.println("deleteTeam");
+		System.out.println("addPilotToTeam");
+		System.out.println("deletePilotFromTeam");
+		System.out.println("addSponsorToTeam");
+		System.out.println("deleteSponsorFromTeam");
+		System.out.println("addVehicleToTeam");
+		System.out.println("deleteVehicleFromTeam");
+		System.out.println("deletePilotParticipantFromRace");
+		System.out.println("setParticipantResultInRace");
+		System.out.println("listResults");
+		System.out.println("listApplication");
+		System.out.println("listCalendar");
+		cycle("");
+	}
+	
 	public static void loadInfoHandler()
 	{
-		TestRally testClass = new TestRally();
-	    testClass.testDates();
-	    testClass.testRallyCreation();
-	    testClass.testAddAndDeleteCompetition();
-	    testClass.testAddAndDeleteTrack();
-	    testClass.testAddAndDeleteRace();
-	    testClass.testAddAndDeletePilot();
-	    testClass.testAddAndDeleteVehicle();
-	    testClass.testAddAndDeleteSponsor();
-	    testClass.testAddAndDeleteTeam();
-	    testClass.testAddAndDeltePilotInTeam();
-	    testClass.testAddAndDeleteSponsorInTeam();
-	    testClass.testAddAndDeleteVehicleInTeam();
-	    testClass.testAddAndDeleteParticipantResult();
-	    testClass.testCalendar();
-	    testClass.testResults();
+		rally.addCompetition("wrc", "wrc rally");
+		rally.addCompetition("f1", "formula 1");
+		rally.addTrack("montecarlo", "italia", 123);
+		rally.addTrack("estoril", "algarve", 123);
+		rally.addRaceToCompetition("race1", "wrc", "montecarlo", new RallyUtils.Date(2017, 01, 01));
+		rally.addRaceToCompetition("race2", "wrc", "montecarlo", new RallyUtils.Date(2017, 01, 02));		
+		rally.addRaceToCompetition("race3", "wrc", "montecarlo", new RallyUtils.Date(2017, 01, 04));
+		rally.addRaceToCompetition("race4", "wrc", "montecarlo", new RallyUtils.Date(2017, 01, 03));
+		rally.addRaceToCompetition("race5", "f1", "estoril", new RallyUtils.Date(2017, 01, 03));
+
+		rally.addTeam("ferrari");
+
+		rally.addPilot("Abel_Aguiar", new RallyUtils.Date(1996, 11,30), "Male");
+		rally.addPilot("Bruno_Bala", new RallyUtils.Date(1996, 11,30), "Male");
+		rally.addPilot("Carlos_Cruz", new RallyUtils.Date(1996, 11,30), "Male");
+		rally.addPilot("Diogo_Delgado", new RallyUtils.Date(1996, 11,30), "Male");
+		rally.addPilot("Ernesto_Esmeraldo", new RallyUtils.Date(1996, 11,30), "Male");
+		rally.addPilot("Fernando_Fernandes", new RallyUtils.Date(1996, 11,30), "Male");
+		rally.addPilot("Guilherme_Goncalves", new RallyUtils.Date(1996, 11,30), "Male");
+		rally.addPilot("Hugo_Helicopetero", new RallyUtils.Date(1996, 11,30), "Male");
+		rally.addPilot("Ilias_Igual", new RallyUtils.Date(1996, 11,30), "Male");
+		rally.addPilot("Joao_Julio", new RallyUtils.Date(1996, 11,30), "Male");
+		rally.addPilot("Karmen_Karpito", new RallyUtils.Date(1996, 11,30), "Female");
+		rally.addPilot("Lumiar_Luminosa", new RallyUtils.Date(1996, 11,30), "Female");
+
+		rally.addVehicle("carro1", "mclaren", "p8", "99-00-01");
+		rally.addVehicle("carro2", "mclaren", "p8", "99-00-02");
+		rally.addVehicle("carro3", "mclaren", "p8", "99-00-03");
+		rally.addVehicle("carro4", "mclaren", "p8", "99-00-04");
+		rally.addVehicle("carro5", "mclaren", "p8", "99-00-05");
+		rally.addVehicle("carro6", "mclaren", "p8", "99-00-06");
+		rally.addVehicle("carro7", "mclaren", "p8", "99-00-07");
+		rally.addVehicle("carro8", "mclaren", "p8", "99-00-08");
+		rally.addVehicle("carro9", "mclaren", "p8", "99-00-09");
+		rally.addVehicle("carro10", "mclaren", "p8", "99-00-10");
+		rally.addVehicle("carro11", "mclaren", "p8", "99-00-11");
+		rally.addVehicle("carro12", "mclaren", "p8", "99-00-12");
+
+		rally.addPilotToTeam("Abel_Aguiar", "ferrari");
+		rally.addPilotToTeam("Bruno_Bala", "ferrari");
+		rally.addPilotToTeam("Carlos_Cruz", "ferrari");
+		rally.addPilotToTeam("Diogo_Delgado", "ferrari");
+		rally.addPilotToTeam("Ernesto_Esmeraldo", "ferrari");
+		rally.addPilotToTeam("Fernando_Fernandes", "ferrari");
+		rally.addPilotToTeam("Guilherme_Goncalves", "ferrari");
+		rally.addPilotToTeam("Hugo_Helicopetero", "ferrari");
+		rally.addPilotToTeam("Ilias_Igual", "ferrari");		
+		rally.addPilotToTeam("Joao_Julio", "ferrari");		
+		rally.addPilotToTeam("Karmen_Karpito", "ferrari");		
+		rally.addPilotToTeam("Lumiar_Luminosa", "ferrari");
+
+		rally.addVehicleToTeam("carro1", "ferrari");
+		rally.addVehicleToTeam("carro2", "ferrari");
+		rally.addVehicleToTeam("carro3", "ferrari");
+		rally.addVehicleToTeam("carro4", "ferrari");
+		rally.addVehicleToTeam("carro5", "ferrari");
+		rally.addVehicleToTeam("carro6", "ferrari");
+		rally.addVehicleToTeam("carro7", "ferrari");
+		rally.addVehicleToTeam("carro8", "ferrari");
+		rally.addVehicleToTeam("carro9", "ferrari");
+		rally.addVehicleToTeam("carro10", "ferrari");
+		rally.addVehicleToTeam("carro11", "ferrari");
+		rally.addVehicleToTeam("carro12", "ferrari");
+
+		rally.setParticipantResultInRace("race1", "Abel_Aguiar", "carro1", "ferrari", 413);
+		rally.setParticipantResultInRace("race1", "Bruno_Bala", "carro2", "ferrari", 465);
+		rally.setParticipantResultInRace("race1", "Carlos_Cruz", "carro3", "ferrari", 233);
+		rally.setParticipantResultInRace("race1", "Diogo_Delgado", "carro4", "ferrari", 452);
+		rally.setParticipantResultInRace("race1", "Ernesto_Esmeraldo", "carro5", "ferrari", 380);
+		rally.setParticipantResultInRace("race1", "Fernando_Fernandes", "carro6", "ferrari", 348);
+		rally.setParticipantResultInRace("race1", "Guilherme_Goncalves", "carro7", "ferrari", 311);
+		rally.setParticipantResultInRace("race1", "Hugo_Helicopetero", "carro8", "ferrari", 311);
+		rally.setParticipantResultInRace("race1", "Ilias_Igual", "carro9", "ferrari", 258);
+		rally.setParticipantResultInRace("race1", "Joao_Julio", "carro10", "ferrari", 413);
+		rally.setParticipantResultInRace("race1", "Karmen_Karpito", "carro11", "ferrari", 426);
+		rally.setParticipantResultInRace("race1", "Lumiar_Luminosa", "carro12", "ferrari", 359);
+
+		rally.setParticipantResultInRace("race2", "Abel_Aguiar", "carro1", "ferrari", 443);
+		rally.setParticipantResultInRace("race2", "Bruno_Bala", "carro2", "ferrari", 470);
+		rally.setParticipantResultInRace("race2", "Carlos_Cruz", "carro3", "ferrari", 380);
+		rally.setParticipantResultInRace("race2", "Diogo_Delgado", "carro4", "ferrari", 497);
+		rally.setParticipantResultInRace("race2", "Ernesto_Esmeraldo", "carro5", "ferrari", 245);
+		rally.setParticipantResultInRace("race2", "Fernando_Fernandes", "carro6", "ferrari", 379);
+		rally.setParticipantResultInRace("race2", "Guilherme_Goncalves", "carro7", "ferrari", 337);
+		rally.setParticipantResultInRace("race2", "Hugo_Helicopetero", "carro8", "ferrari", 332);
+		rally.setParticipantResultInRace("race2", "Ilias_Igual", "carro9", "ferrari", 360);
+		rally.setParticipantResultInRace("race2", "Joao_Julio", "carro10", "ferrari", 238);
+		rally.setParticipantResultInRace("race2", "Karmen_Karpito", "carro11", "ferrari", 261);
+		rally.setParticipantResultInRace("race2", "Lumiar_Luminosa", "carro12", "ferrari", 276);
+
+		rally.setParticipantResultInRace("race3", "Abel_Aguiar", "carro1", "ferrari", 432);
+		rally.setParticipantResultInRace("race3", "Bruno_Bala", "carro2", "ferrari", 424);
+		rally.setParticipantResultInRace("race3", "Carlos_Cruz", "carro3", "ferrari", 449);
+		rally.setParticipantResultInRace("race3", "Diogo_Delgado", "carro4", "ferrari", 443);
+		rally.setParticipantResultInRace("race3", "Ernesto_Esmeraldo", "carro5", "ferrari", 273);
+		rally.setParticipantResultInRace("race3", "Fernando_Fernandes", "carro6", "ferrari", 404);
+		rally.setParticipantResultInRace("race3", "Guilherme_Goncalves", "carro7", "ferrari", 209);
+		rally.setParticipantResultInRace("race3", "Hugo_Helicopetero", "carro8", "ferrari", 302);
+		rally.setParticipantResultInRace("race3", "Ilias_Igual", "carro9", "ferrari", 301);
+		rally.setParticipantResultInRace("race3", "Joao_Julio", "carro10", "ferrari", 390);
+		rally.setParticipantResultInRace("race3", "Karmen_Karpito", "carro11", "ferrari", 393);
+		rally.setParticipantResultInRace("race3", "Lumiar_Luminosa", "carro12", "ferrari", 370);
 	    cycle("");
 	}
 	
